@@ -11,7 +11,7 @@ public class SalesItem {
     {
         this.code           = code;
         this.name           = name;
-        this.description    =description;
+        this.description    = description;
         this.pathImage      = pathImage;
     }
 
