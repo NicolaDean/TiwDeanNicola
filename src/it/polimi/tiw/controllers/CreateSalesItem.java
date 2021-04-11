@@ -22,10 +22,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.WebContext;
+import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
+
 @WebServlet(name = "CreateSalesItem", value = "/CreateSalesItem")
 public class CreateSalesItem  extends HttpServlet {
 
     Connection connection;
+    private TemplateEngine templateEngine;
 
     @Override
     public void init() throws ServletException {
@@ -37,6 +43,12 @@ public class CreateSalesItem  extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(context);
+        templateResolver.setTemplateMode(TemplateMode.HTML);
+        this.templateEngine = new TemplateEngine();
+        this.templateEngine.setTemplateResolver(templateResolver);
+        templateResolver.setSuffix(".html");
     }
 
     @Override
@@ -50,6 +62,7 @@ public class CreateSalesItem  extends HttpServlet {
 
         String filesPath = context.getContextPath() +"/UploadFolder";
         SalesItemDao dao = new SalesItemDao(this.connection);
+
         List<SalesItem> list =new ArrayList<>();
         try {
              list = dao.getItemById();
@@ -57,7 +70,16 @@ public class CreateSalesItem  extends HttpServlet {
             throwables.printStackTrace();
         }
 
-        response.setContentType("text/html");
+
+
+        // Redirect to the Home page and add missions to the parameters
+        String path = "/WEB-INF/TemplateHTML/auctions";
+        ServletContext servletContext = getServletContext();
+        final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+        ctx.setVariable("item", list);
+        templateEngine.process(path, ctx, response.getWriter());
+
+        /*response.setContentType("text/html");
 
         PrintWriter out = response.getWriter();
 
@@ -73,7 +95,7 @@ public class CreateSalesItem  extends HttpServlet {
         out.println("<img src=\"" + filesPath + "nicola/deathnote.png " + " \"/>");
 
         out.println("</HTML></BODY>");
-        out.close();
+        out.close();*/
     }
 }
 

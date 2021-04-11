@@ -29,6 +29,7 @@ CREATE TABLE salesItems(
 
 insert into salesItems (name,description,imagePath) values ("Gum Gum nomi","Frutto del diavolo GumGumNomi dal mondo di onepice","/nicola/gumgum.png");
 insert into salesItems (name,description,imagePath) values ("Death Note","Libro dello shinigami, permette di uccidere chiunque scrivendo il suo nome","/nicola/deathnote.png");
-insert into salesItems (name,description,imagePath) values ("500","Fiat 500","/nicola/500.png");
+insert into salesItems (name,description,imagePath) values ("500","Fiat 500","/nicola/500.jpg");
+insert into salesItems (name,description,imagePath) values ("500","Fiat 500","/nicola/500.jpg");
 
 select * from salesItems;

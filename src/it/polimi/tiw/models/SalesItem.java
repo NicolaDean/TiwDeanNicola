@@ -30,7 +30,7 @@ public class SalesItem {
         return this.description;
     }
 
-    public String getPathImage()
+    public String getpathImage()
     {
         return this.pathImage;
     }
