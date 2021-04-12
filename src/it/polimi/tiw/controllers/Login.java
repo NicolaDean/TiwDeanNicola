@@ -13,21 +13,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 @WebServlet(name = "Login", value = "/Login")
-public class Login extends HttpServlet {
+public class Login extends BasicServerletThymeleadSQL {
 
-    Connection connection;
-
-    @Override
-    public void init() throws ServletException {
-        super.init();
-        ServletContext context = getServletContext();
-
-        try {
-            this.connection = dbConnection.getConnection(context);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -50,44 +37,29 @@ public class Login extends HttpServlet {
                 "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js\"></script>\n" +
                 "<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js\"></script>\n" +
                 "</head>");
-        if(this.connection == null)
+
+        UserDao dao = new UserDao(this.getConnection());
+        User usr = null;
+        try {
+            usr = dao.checkUserLogin(email,psw);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        if(usr == null)
         {
-            System.out.println("Tentativo riconnessione");
-            ServletContext context = getServletContext();
-
-            try {
-                this.connection = dbConnection.getConnection(context);
-            } catch (Exception e) {
-
-                out.println(e.getMessage());
-            }
-            if(this.connection == null)  System.out.println("ERORORROROROOR");
+            out.println("<div class=\"alert alert-warning\">\n" +
+                        "  <strong>Login Fallito, Password o userneme scorretto.\n" +
+                        "</div>");System.out.println("Login fallito");
         }
         else
-        {
-            UserDao dao = new UserDao(this.connection);
-            User usr = null;
-            try {
-                usr = dao.checkUserLogin(email,psw);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-
-            if(usr == null)
-            {
-                out.println("<div class=\"alert alert-warning\">\n" +
-                        "  <strong>Login Fallito, Password o userneme scorretto.\n" +
-                        "</div>");
-                System.out.println("Login fallito");
-            }
-            else
             {
                 out.println("<div class=\"alert alert-success\">\n" +
                         "  <strong> Welcome! "+ usr.getName()+ "</strong> \n"+
                         "</div>");
                 System.out.println("Login fallito");
             }
-        }
+
 
         out.close();
 

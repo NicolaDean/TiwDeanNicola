@@ -47,4 +47,9 @@ public class SalesItemDao {
 
         return salesItem;
     }
+
+    public int createSalesItem(String name,String description,String imgPath)
+    {
+        return -1;
+    }
 }

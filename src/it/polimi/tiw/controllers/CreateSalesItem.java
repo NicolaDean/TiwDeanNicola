@@ -28,28 +28,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 @WebServlet(name = "CreateSalesItem", value = "/CreateSalesItem")
-public class CreateSalesItem  extends HttpServlet {
-
-    Connection connection;
-    private TemplateEngine templateEngine;
-
-    @Override
-    public void init() throws ServletException {
-        super.init();
-        ServletContext context = getServletContext();
-
-        try {
-            this.connection = dbConnection.getConnection(context);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(context);
-        templateResolver.setTemplateMode(TemplateMode.HTML);
-        this.templateEngine = new TemplateEngine();
-        this.templateEngine.setTemplateResolver(templateResolver);
-        templateResolver.setSuffix(".html");
-    }
+public class CreateSalesItem  extends BasicServerletThymeleadSQL {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -61,7 +40,7 @@ public class CreateSalesItem  extends HttpServlet {
         ServletContext context = request.getServletContext();
 
         String filesPath = context.getContextPath() +"/UploadFolder";
-        SalesItemDao dao = new SalesItemDao(this.connection);
+        SalesItemDao dao = new SalesItemDao(this.getConnection());
 
         List<SalesItem> list =new ArrayList<>();
         try {
@@ -77,25 +56,8 @@ public class CreateSalesItem  extends HttpServlet {
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
         ctx.setVariable("item", list);
-        templateEngine.process(path, ctx, response.getWriter());
+        this.getTemplateEngine().process(path, ctx, response.getWriter());
 
-        /*response.setContentType("text/html");
-
-        PrintWriter out = response.getWriter();
-
-        out.println("<HTML><BODY>");
-        out.println("<HEAD><TITLE>Show image</TITLE></HEAD>");
-
-        for(SalesItem item:list)
-        {
-            out.println("<img src=\""+ filesPath + item.getPathImage() +" \"/>");
-        }
-        out.println("<P>" + "Image uploaded correctly!" + "</P>");
-
-        out.println("<img src=\"" + filesPath + "nicola/deathnote.png " + " \"/>");
-
-        out.println("</HTML></BODY>");
-        out.close();*/
     }
 }
 

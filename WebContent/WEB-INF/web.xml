@@ -26,6 +26,10 @@
         <servlet-name>CreateSalesItem</servlet-name>
         <servlet-class>it.polimi.tiw.controllers.CreateSalesItem</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CreateAuction</servlet-name>
+        <servlet-class>it.polimi.tiw.controllers.CreateAuction</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
@@ -35,6 +39,11 @@
     <servlet-mapping>
         <servlet-name>CreateSalesItem</servlet-name>
         <url-pattern>/CreateSalesItem</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>CreateAuction</servlet-name>
+        <url-pattern>/CreateAuction</url-pattern>
     </servlet-mapping>
 
     <welcome-file-list>
