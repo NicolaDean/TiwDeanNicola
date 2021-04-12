@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>auction Creator</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="col d-flex justify-content-center">
+<h1> AUCTION CREATIONS</h1>
+</div>
+<div class="col d-flex justify-content-center">
+    <h3>Here you can create a new auction</h3>
+</div>
+<div class="col d-flex justify-content-center">
+
+    <div  style="width:700px" >
+        <form>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Auction's item</span>
+                </div>
+                <input type="text" class="form-control" placeholder="Name">
+                <div class="custom-file">
+                    <input type="file" accept=".png,.jpg,.jpeg" class="custom-file-input" id="customFile">
+                    <label class="custom-file-label" for="customFile">Choose an image</label>
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <textarea  type="text" class="form-control" placeholder="Insert a small description..."/></textarea>
+            </div>
+
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Offert details [ $ ]</span>
+                </div>
+                    <input type="number"class="form-control"  id="inputNumber" placeholder="Minimum offer"  name="inputNumber" value="10">
+                    <input type="number" class="form-control" id="inputNumber" placeholder="Start offer"  name="inputNumber" value="10">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Expiring Date</span>
+                </div>
+                <input type="datetime-local" id="expiringDate"
+                       name="meeting-time" value="2021-04-12T19:30"
+                       min="2021-04-12T00:00" max="2050-06-14T00:00">
+            </div>
+            <button type="submit" class="btn btn-primary">CREATE AUCTION</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
