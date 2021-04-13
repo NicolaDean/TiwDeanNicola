@@ -19,19 +19,20 @@
 <div class="col d-flex justify-content-center">
 
     <div  style="width:700px" >
-        <form>
+        <form action="CreateAuction" method="post" enctype="multipart/form-data">
+            <input name="file"  type="file" accept=".png,.jpg,.jpeg">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Auction's item</span>
                 </div>
-                <input type="text" class="form-control" placeholder="Name">
+                <input name="name" type="text" class="form-control" placeholder="Name">
                 <div class="custom-file">
-                    <input type="file" accept=".png,.jpg,.jpeg" class="custom-file-input" id="customFile">
+                    <input name="filee"  type="file" accept=".png,.jpg,.jpeg" class="custom-file-input" id="customFile">
                     <label class="custom-file-label" for="customFile">Choose an image</label>
                 </div>
             </div>
             <div class="input-group mb-3">
-                <textarea  type="text" class="form-control" placeholder="Insert a small description..."/></textarea>
+                <textarea  name="description" type="text" class="form-control" placeholder="Insert a small description..."/></textarea>
             </div>
 
 
@@ -39,17 +40,20 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Offert details [ $ ]</span>
                 </div>
-                    <input type="number"class="form-control"  id="inputNumber" placeholder="Minimum offer"  name="inputNumber" value="10">
-                    <input type="number" class="form-control" id="inputNumber" placeholder="Start offer"  name="inputNumber" value="10">
+                    <input name="minimumOffer" type="number"class="form-control"  id="inputNumber" placeholder="Minimum offer"  value="10">
+                    <input name="initialOffer" type="number" class="form-control" id="inputNumber" placeholder="Start offer"  value="10">
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Expiring Date</span>
                 </div>
-                <input type="datetime-local" id="expiringDate"
+                <input name="expiringDate" type="datetime-local" id="expiringDate"
                        name="meeting-time" value="2021-04-12T19:30"
                        min="2021-04-12T00:00" max="2050-06-14T00:00">
             </div>
+
+
+
             <button type="submit" class="btn btn-primary">CREATE AUCTION</button>
         </form>
     </div>

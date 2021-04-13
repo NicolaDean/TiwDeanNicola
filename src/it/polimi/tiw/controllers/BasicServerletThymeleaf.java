@@ -3,8 +3,7 @@ package it.polimi.tiw.controllers;
 import it.polimi.tiw.managment.TemplateEngineGenerator;
 import it.polimi.tiw.managment.dbConnection;
 import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.templatemode.TemplateMode;
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
+import org.thymeleaf.context.WebContext;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -15,11 +14,10 @@ import java.io.IOException;
 import java.sql.Connection;
 
 /**
- * Class that extend httpServerlet to avoid recoding same init() code in all controllers
+ * Generate a thymeleaf template engine
  */
-public class BasicServerletThymeleadSQL extends HttpServlet {
+public class BasicServerletThymeleaf extends HttpServlet {
 
-    private Connection connection;
     private TemplateEngine templateEngine;
 
     /**
@@ -33,16 +31,7 @@ public class BasicServerletThymeleadSQL extends HttpServlet {
         //Generate Context
         ServletContext context = getServletContext();
         //Generate Thymeleaf template engine
-        TemplateEngineGenerator.getTemplateEngine(context,".html");
-
-        //Try to connect to database and in case of error forward error Page
-        try {
-            this.connection = dbConnection.getConnection(context);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
+        this.templateEngine = TemplateEngineGenerator.getTemplateEngine(context,".html");
     }
 
 
@@ -64,18 +53,42 @@ public class BasicServerletThymeleadSQL extends HttpServlet {
 
     /**
      *
-     * @return Getter to get db connection
-     */
-    public Connection getConnection() {
-        return this.connection;
-    }
-
-    /**
-     *
      * @return the thymeleaf initialized template engine
      */
     public TemplateEngine getTemplateEngine()
     {
         return this.templateEngine;
     }
+
+    /**
+     * Generate an error on a "standard" error template $errorMsg
+     * @param request
+     * @param response
+     * @param error
+     */
+    public void setError(HttpServletRequest request, HttpServletResponse response,String error,String path)
+    {
+        request.setAttribute("errorMsg",error);
+        try {
+            templateRenderer(request,response,path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Given the path of a template it generate it
+     * @param request http request
+     * @param response http response
+     * @param path template path
+     * @throws IOException template not exist
+     */
+    public void templateRenderer(HttpServletRequest request, HttpServletResponse response,String path) throws IOException {
+        ServletContext context = getServletContext();
+
+        WebContext ctx = new WebContext(request, response, context, request.getLocale());
+        this.templateEngine.process(path,ctx,response.getWriter());
+    }
+
 }
+

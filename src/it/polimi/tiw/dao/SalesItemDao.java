@@ -35,7 +35,7 @@ public class SalesItemDao {
                 salesItem.add(new SalesItem(queryResult.getInt("id"),
                                             queryResult.getString("name"),
                                             queryResult.getString("description"),
-                                            queryResult.getString("imagePath")));
+                                            "png"));
 
             }
         }
@@ -48,8 +48,42 @@ public class SalesItemDao {
         return salesItem;
     }
 
-    public int createSalesItem(String name,String description,String imgPath)
-    {
-        return -1;
+    public int createSalesItem(String name,String description,String fileFormat) {
+        PreparedStatement statement = null;
+
+        //SALES ITEM INSERTION
+        String query = "insert into salesItems (name,description,fileFormat) values (?,?,?)";
+        try {
+            statement = this.connection.prepareStatement(query);
+            statement.setString(1,name);
+            statement.setString(2,description);
+            statement.setString(3,fileFormat);
+            statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+
+        //GET SALES ITEM CODE
+        statement = null;
+        ResultSet queryResult       = null;
+
+        query = "select max(id) as id from salesItems";
+
+        int out = -1;
+        try
+        {
+            statement = this.connection.prepareStatement(query);
+            queryResult = statement.executeQuery();
+
+            while(queryResult.next()) {
+                out = queryResult.getInt("id");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+
+        return out;
     }
 }

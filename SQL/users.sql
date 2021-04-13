@@ -1,6 +1,12 @@
 CREATE DATABASE   tiw;
 
+DROP  view IF EXISTS  auctiondata;
+DROP TABLE IF EXISTS  offerts;
+DROP  TABLE IF EXISTS  auctions;
 DROP  TABLE IF EXISTS users;
+DROP  TABLE IF EXISTS  salesItems;
+
+
 CREATE TABLE users(
 	id int NOT NULL AUTO_INCREMENT,
     email 		varchar(20),
@@ -17,37 +23,41 @@ insert into users (email,password,name) values ("fabio@gmail.com","1234","Fabio"
 
 select * from users;
 
-DROP  TABLE IF EXISTS  salesItems;
+
 CREATE TABLE salesItems(
 	id int NOT NULL AUTO_INCREMENT,
     name 		varchar(20),
     description varchar(100),
-    imagePath 	varchar(50),
+    fileFormat  varchar(10),
     PRIMARY KEY(id)
-    
 );
 
-insert into salesItems (name,description,imagePath) values ("Gum Gum nomi","Frutto del diavolo GumGumNomi dal mondo di onepice","/nicola/gumgum.png");
-insert into salesItems (name,description,imagePath) values ("Death Note","Libro dello shinigami, permette di uccidere chiunque scrivendo il suo nome","/nicola/deathnote.png");
-insert into salesItems (name,description,imagePath) values ("500","Fiat 500","/nicola/500.jpg");
-insert into salesItems (name,description,imagePath) values ("S","Fiat 500","/nicola/500.jpg");
+insert into salesItems (name,description,fileFormat) values ("Gum Gum nomi","Frutto del diavolo GumGumNomi dal mondo di onepice","png");
+insert into salesItems (name,description,fileFormat) values ("Death Note","Libro dello shinigami, permette di uccidere chiunque scrivendo il suo nome","png");
+insert into salesItems (name,description,fileFormat) values ("500","Fiat 500","png");
 
 select * from salesItems;
 
-DROP  TABLE IF EXISTS  auctions;
+
+
+
+
 CREATE TABLE auctions(
 	id int NOT NULL AUTO_INCREMENT,
     userid 			int,
     salesItemid 	int,
     initialPrize 	int,
     minimumOffer 	int,
-    espiringDate    TIMESTAMP, 
+    expiringDate    datetime, 
     PRIMARY KEY(id),
 	FOREIGN  KEY (userid) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN  KEY (salesItemid) REFERENCES salesitems(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-DROP TABLE IF EXISTS  offerts;
+insert into auctions (userid,salesItemid,initialPrize,minimumOffer,expiringDate)
+	          values (1,1,1,1,"2021-04-01 19:30");      
+insert into auctions (userid,salesItemid,initialPrize,minimumOffer,expiringDate)
+	          values (2,2,5,4,"2021-04-01 19:30");      
 CREATE TABLE offerts(
 	id int NOT NULL AUTO_INCREMENT,
     userid 			int,
@@ -59,5 +69,13 @@ CREATE TABLE offerts(
     FOREIGN  KEY (autionsid) REFERENCES auctions(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+drop view if exists auctionsdata;
+create view auctionsData as 
+(	select auctions.id as auctionid,salesitems.id as itemId,auctions.userid,name,description,initialPrize,minimumOffer,expiringDate,fileFormat
+	from auctions natural join salesitems
+);
 
-
+select max(id) as id from salesItems;
+select * from salesitems;
+select * from auctions;
+select * from auctionsData

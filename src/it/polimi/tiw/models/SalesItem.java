@@ -5,14 +5,14 @@ public class SalesItem {
     private int code;
     private String name;
     private String description;
-    private String pathImage;
+    private String fileFormat;
 
-    public SalesItem(int code,String name,String description,String pathImage)
+    public SalesItem(int code,String name,String description,String fileFormat)
     {
         this.code           = code;
         this.name           = name;
         this.description    = description;
-        this.pathImage      = pathImage;
+        this.fileFormat     = fileFormat;
     }
 
     public int getCode()
@@ -30,11 +30,7 @@ public class SalesItem {
         return this.description;
     }
 
-    public String getpathImage()
-    {
-        return this.pathImage;
-    }
-
+    public String getFileFormat() {return  this.fileFormat;}
 
 
 }

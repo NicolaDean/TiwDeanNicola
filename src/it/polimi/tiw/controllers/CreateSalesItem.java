@@ -1,34 +1,22 @@
 package it.polimi.tiw.controllers;
 
 import it.polimi.tiw.dao.SalesItemDao;
-import it.polimi.tiw.managment.dbConnection;
 import it.polimi.tiw.models.SalesItem;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.net.URLEncoder;
-import java.nio.file.Paths;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
-import org.thymeleaf.templatemode.TemplateMode;
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 @WebServlet(name = "CreateSalesItem", value = "/CreateSalesItem")
-public class CreateSalesItem  extends BasicServerletThymeleadSQL {
+public class CreateSalesItem  extends BasicServerletThymeleafSQL {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
