@@ -51,6 +51,6 @@ public class Auction {
     public String getImagePath(String fileExtension)
     {
         //example : userid/auctionid/itemId.png
-        return "/" + this.userId +"/" + this.salesItem.getCode() + "." + fileExtension;
+        return this.userId +"/" + this.salesItem.getCode() + fileExtension;
     }
 }

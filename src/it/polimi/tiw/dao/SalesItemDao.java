@@ -35,7 +35,7 @@ public class SalesItemDao {
                 salesItem.add(new SalesItem(queryResult.getInt("id"),
                                             queryResult.getString("name"),
                                             queryResult.getString("description"),
-                                            "png"));
+                                            queryResult.getString("fileFormat")));
 
             }
         }

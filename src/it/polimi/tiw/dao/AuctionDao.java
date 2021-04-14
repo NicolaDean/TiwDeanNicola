@@ -20,7 +20,7 @@ public class AuctionDao {
         this.connection = connection;
     }
 
-    public int createAution(int id, String name, String description, String fileFormat, Date expiringDate, int initialOffer, int minimumOffer)
+    public int createAution(int userid, String name, String description, String fileFormat, Date expiringDate, int initialOffer, int minimumOffer)
     {
         SalesItemDao salesItemDao = new SalesItemDao(this.connection);
         PreparedStatement queryParameters = null;
@@ -28,13 +28,12 @@ public class AuctionDao {
         int salesItemid = -1;
         salesItemid = salesItemDao.createSalesItem(name,description,fileFormat);
 
-        int userid = 1;
 
-        String query  = "INSERT INTO AUCTIONS " +
-                        "(userid,salesItemid,initialPrize,minimumOffer,espiringDate)" +
-                        "VALUES" +
-                        "(?,?,?,?,?)";
-
+        String query ="insert into auctions " +
+                      "(userid,salesItemid,initialPrize,minimumOffer,expiringDate)"+
+                      "values"+
+                      "(?,?,?,?,?)";
+        System.out.println(expiringDate.toString());
         try {
             queryParameters = this.connection.prepareStatement(query);
             queryParameters.setInt(1,userid);

@@ -40,6 +40,7 @@ public class CreateAuction  extends BasicServerletThymeleafSQL {
             response.sendRedirect(getServletContext().getContextPath() + "/Login");
             return;
         };
+        System.out.println("USER: ->" + user.getId());
 
 
         AuctionDao auctionDao = new AuctionDao(this.getConnection());
@@ -66,14 +67,16 @@ public class CreateAuction  extends BasicServerletThymeleafSQL {
 
 
         String fileName = filePart.getName();
-        String imgPath = user.getId()+"/" +"a.png";
-                //Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+        Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+
+        String imgFormat =filePart.getContentType();
+        imgFormat="."+imgFormat.substring(imgFormat.lastIndexOf("/")+1);
 
         int itemId = 0;
-        itemId = auctionDao.createAution(1,
+        itemId = auctionDao.createAution(   user.getId(),
                                             request.getParameter("name"),
                                             request.getParameter("description"),
-                                            "png",
+                                            imgFormat,
                                             expiringData,
                                             initialOffer,
                                             minimumOffer
@@ -83,7 +86,7 @@ public class CreateAuction  extends BasicServerletThymeleafSQL {
 
         File uploads = new File(getServletContext().getInitParameter("imgUpload")+"/"+user.getId()+"/");
 
-        File file = new File(uploads, itemId+".png");
+        File file = new File(uploads, itemId+imgFormat);
 
         if (!uploads.exists()) {
             uploads.mkdirs();
