@@ -1,0 +1,13 @@
+<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <filter id="svg_1_blur">
+   <feGaussianBlur stdDeviation="0"/>
+  </filter>
+ </defs>
+ <g>
+  <title>Layer 1</title>
+  <rect stroke="#000" rx="15" id="svg_4" height="97.93784" width="98.45331" y="1.03108" x="0.77334" opacity="undefined" fill="#563D7C"/>
+  <text fill="#DDDDDD" stroke-width="0" opacity="undefined" x="29.32873" y="55.76074" id="svg_1" font-size="24" font-family="monospace" text-anchor="start" xml:space="preserve" font-weight="normal" font-style="normal" transform="matrix(4.157350967559587,0,0,2.1702767765789512,-115.76674563026054,-55.02509504023802) " stroke="#000" filter="url(#svg_1_blur)">N</text>
+  <text fill="#DDDDDD" stroke="#000" stroke-width="0" stroke-dasharray="null" stroke-opacity="null" fill-opacity="null" opacity="undefined" x="61.5" y="65" id="svg_2" font-size="24" font-family="monospace" text-anchor="start" xml:space="preserve">ic</text>
+ </g>
+</svg>

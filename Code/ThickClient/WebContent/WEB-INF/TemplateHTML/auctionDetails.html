@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Display Autions</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:replace="/WEB-INF/TemplateHTML/header :: header"> </div>
+
+<div th:if="${auction && offerts}" >
+
+    <div class="col d-flex justify-content-center">
+        <div class="row" style="width:800px" >
+            <div class="col">
+                <img th:src="@{${'ImageGetter/'+ auction.getImagePath(auction.getSalesItem().getFileFormat())}}" width="150px" height="150px"/>
+            </div>
+            <div class="col">
+                <div class="row ">
+                    <h1 th:text="${auction.getSalesItem().getName()}"></h1>
+                </div>
+                <div class="row">
+                    <p th:text="${auction.getSalesItem().getDescription()}"></p>
+                </div>
+
+                <div class="row">
+                    <h6 class="text-warning" th:text= "${auction.calculateExpiringTime()}"></h6>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col d-flex justify-content-center">
+        <h1>Users Offerts:</h1>
+        <table class="table ">
+            <thead>
+            </thead>
+            <tbody>
+                <tr th:each="o : ${offerts}">
+                    <td th:text="${o.getuserName()}"></td>
+                    <td th:text="${o.getOffer()}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<div th:replace="/WEB-INF/TemplateHTML/errorTemplate :: errorTemplate"> </div>
+
+</body>
+</html>
