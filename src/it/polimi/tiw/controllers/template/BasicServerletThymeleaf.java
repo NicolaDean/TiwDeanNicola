@@ -1,7 +1,6 @@
-package it.polimi.tiw.controllers;
+package it.polimi.tiw.controllers.template;
 
 import it.polimi.tiw.managment.TemplateEngineGenerator;
-import it.polimi.tiw.managment.dbConnection;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -11,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
 
 /**
  * Generate a thymeleaf template engine

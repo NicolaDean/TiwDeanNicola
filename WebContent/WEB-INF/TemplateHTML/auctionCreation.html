@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>auction Creator</title>
@@ -9,6 +9,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
+
+<div th:replace="/WEB-INF/TemplateHTML/header :: header"> </div>
 
 <div class="col d-flex justify-content-center">
 <h1> AUCTION CREATIONS</h1>
@@ -20,14 +22,14 @@
 
     <div  style="width:700px" >
         <form action="CreateAuction" method="post" enctype="multipart/form-data">
-            <input name="file"  type="file" accept=".png,.jpg,.jpeg">
+            <input name="file"  type="file" accept=".png,.jpg,.jpeg,.webp">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Auction's item</span>
                 </div>
                 <input name="name" type="text" class="form-control" placeholder="Name">
                 <div class="custom-file">
-                    <input name="filee"  type="file" accept=".png,.jpg,.jpeg" class="custom-file-input" id="customFile">
+                    <input name="filee"  type="file" accept=".png,.jpg,.jpeg,.webp" class="custom-file-input" id="customFile">
                     <label class="custom-file-label" for="customFile">Choose an image</label>
                 </div>
             </div>
@@ -40,15 +42,15 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Offert details [ $ ]</span>
                 </div>
-                    <input name="minimumOffer" type="number"class="form-control"  id="inputNumber" placeholder="Minimum offer"  value="10">
-                    <input name="initialOffer" type="number" class="form-control" id="inputNumber" placeholder="Start offer"  value="10">
+                    <input name="minimumOffer" type="number"class="form-control"  id="inputNumber" placeholder="Minimum offer">
+                    <input name="initialOffer" type="number" class="form-control" id="inputNumber" placeholder="Start offer" >
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Expiring Date</span>
                 </div>
                 <input name="expiringDate" type="datetime-local" id="expiringDate"
-                       name="meeting-time" value="2021-04-12T19:30"
+                       value="2021-04-12T19:30"
                        min="2021-04-12T00:00" max="2050-06-14T00:00">
             </div>
 

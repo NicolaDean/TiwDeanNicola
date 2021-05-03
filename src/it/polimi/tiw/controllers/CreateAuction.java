@@ -1,9 +1,9 @@
 package it.polimi.tiw.controllers;
 
+import it.polimi.tiw.controllers.template.BasicServerletThymeleafSQL;
 import it.polimi.tiw.dao.AuctionDao;
 import it.polimi.tiw.models.User;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -19,8 +19,6 @@ import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @MultipartConfig
@@ -95,6 +93,8 @@ public class CreateAuction  extends BasicServerletThymeleafSQL {
         try (InputStream input = filePart.getInputStream()) {
             Files.copy(input, file.toPath());
         }
+
+        response.sendRedirect(getServletContext().getContextPath() + "/home");
 
     }
 }

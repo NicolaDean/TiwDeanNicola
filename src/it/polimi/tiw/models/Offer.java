@@ -1,24 +1,26 @@
 package it.polimi.tiw.models;
 
+import java.util.Date;
+
 public class Offer {
 
-    int idUser;
-    int idAuction;
+    String userName;
     int offer;
+    Date date;
 
-    public Offer(int idUser,int idAuction,int offer)
+    public Offer(String userName,int offer,Date date)
     {
-        this.idUser     = idUser;
-        this.idAuction  = idAuction;
+        this.userName   = userName;
         this.offer      = offer;
+        this.date       = date;
     }
 
-    public int getIdUser() {
-        return this.idUser;
+    public String getuserName() {
+        return this.userName;
     }
 
-    public int getIdAuction() {
-        return this.idAuction;
+    public Date getDate() {
+        return this.date;
     }
 
     public int getOffer() {

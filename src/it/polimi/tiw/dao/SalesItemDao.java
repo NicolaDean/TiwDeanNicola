@@ -48,27 +48,13 @@ public class SalesItemDao {
         return salesItem;
     }
 
-    public int createSalesItem(String name,String description,String fileFormat) {
-        PreparedStatement statement = null;
-
-        //SALES ITEM INSERTION
-        String query = "insert into salesItems (name,description,fileFormat) values (?,?,?)";
-        try {
-            statement = this.connection.prepareStatement(query);
-            statement.setString(1,name);
-            statement.setString(2,description);
-            statement.setString(3,fileFormat);
-            statement.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-
+    public int getSalesItemCode()
+    {
         //GET SALES ITEM CODE
-        statement = null;
+        PreparedStatement statement = null;
         ResultSet queryResult       = null;
 
-        query = "select max(id) as id from salesItems";
+        String query = "select max(id) as id from salesItems";
 
         int out = -1;
         try
@@ -85,5 +71,23 @@ public class SalesItemDao {
 
 
         return out;
+    }
+
+    public int createSalesItem(String name,String description,String fileFormat) {
+        PreparedStatement statement = null;
+
+        //SALES ITEM INSERTION
+        String query = "insert into salesItems (name,description,fileFormat) values (?,?,?)";
+        try {
+            statement = this.connection.prepareStatement(query);
+            statement.setString(1,name);
+            statement.setString(2,description);
+            statement.setString(3,fileFormat);
+            statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        //find the code of the item i inserted
+        return getSalesItemCode();
     }
 }
