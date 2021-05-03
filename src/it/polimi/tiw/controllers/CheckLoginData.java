@@ -1,6 +1,6 @@
 package it.polimi.tiw.controllers;
 
-import it.polimi.tiw.dao.AuctionDao;
+import it.polimi.tiw.controllers.template.BasicServerletThymeleafSQL;
 import it.polimi.tiw.dao.UserDao;
 import it.polimi.tiw.managment.TemplatePaths;
 import it.polimi.tiw.models.User;
@@ -9,7 +9,6 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 
 @WebServlet(name = "Login", value = "/Login")

@@ -9,13 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "Home", value = "/home")
-public class GoToHomePage extends BasicServerletThymeleaf {
+@WebServlet(name = "Create", value = "/Create")
+public class GoToCreationPage extends BasicServerletThymeleaf {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        this.templateRenderer(request,response, TemplatePaths.homePage);
+        this.templateRenderer(request,response, TemplatePaths.auctionCreate);
         return;
     }
-
 }

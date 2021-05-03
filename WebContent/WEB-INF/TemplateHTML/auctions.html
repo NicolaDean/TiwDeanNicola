@@ -10,26 +10,70 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
+<div th:replace="/WEB-INF/TemplateHTML/header :: header"> </div>
 
-<table class="table table-bordered">
+<div class="col d-flex justify-content-center">
+    <h2 th:if="${session.currentUser}" th:text="${session.currentUser.name + ', here you can navigate through all our auctions'}"></h2>
+</div>
+
+<div class="col d-flex justify-content-center">
+    <h1>Have Fun!</h1>
+</div>
+
+<div class="col d-flex justify-content-center">
+
+        <form action="Auctions" method="GET" class="form-inline">
+            <div class="input-group mb-3">
+                <input type="text" name="filter" class="form-control" placeholder="What do you want?" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </div>
+            </div>
+        </form>
+</div>
+<div th:replace="/WEB-INF/TemplateHTML/errorTemplate :: errorTemplate"> </div>
+<!--table-bordered-->
+<table class="table ">
     <thead>
-    <tr>
-        <th>AuctionId</th>
-        <th>Items Name</th>
-        <th>Description</th>
-        <th>InitialPrize</th>
-        <th>Minimum offer</th>
-        <th>Image</th>
-    </tr>
     </thead>
     <tbody>
      <tr th:each="a : ${auctions}">
-         <td th:text="${a.id}"></td>
-         <td th:text="${a.getSalesItem().getName()}"></td>
-         <td th:text="${a.getSalesItem().getDescription()}"></td>
-         <td th:text="${a.initialPrice}"></td>
-         <td th:text="${a.minimumOffer}"></td>
-         <td><img th:src="@{${'/UploadFolder/'+ a.getImagePath(a.getSalesItem().getFileFormat())}}" width="100px" height="100px"/></td>
+         <td><img th:src="@{${'ImageGetter/'+ a.getImagePath(a.getSalesItem().getFileFormat())}}" width="150px" height="150px"/></td>
+         <td>
+             <h2 th:text="${a.getSalesItem().getName()} + ' (id: '+ ${a.id}+')   '"></h2> <h6 class="text-warning" th:text= "${a.calculateExpiringTime()}"></h6>
+             <p  th:text="${a.getSalesItem().getDescription()}"></p>
+         </td>
+         <td>
+             <div class="row">
+                 <div class="col"><h6>Current Price:</h6></div>
+                 <div class="col"><p th:text="${' '+a.initialPrice}"></p></div>
+             </div>
+             <div class="row">
+                 <div class="col"><h6>Minimum Offer:</h6></div>
+                 <div class="col"><p th:text="${' '+a.minimumOffer}"></p></div>
+             </div>
+         </td>
+         <td>
+            <p>Expiring Date: </p><p th:text="${#dates.day(a.getExpiringDate()) + ', '+
+                                                #dates.monthName(a.getExpiringDate()) + ' '+
+                                                #dates.year(a.getExpiringDate()) + ' alle '+
+                                                #dates.format(a.getExpiringDate(), 'HH:mm')
+                                                }"></p>
+             <form action="NewOffer" method="POST" class="form-inline my-2 my-lg-0">
+                 <div class="input-group mb-3">
+                     <input name="offer" type="number"class="form-control"  id="inputNumber" placeholder="Make an offer" >
+                     <input type="hidden" id="custId" name="auctionid" th:value="${a.id}">
+                     <button  class="btn btn-outline-success my-2 my-sm-0" type="submit" >Send</button>
+                 </div>
+             </form>
+             <form th:action="Details" method="GET">
+                 <input type="hidden" id="custId" name="auction" th:value="${a.id}">
+                 <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" >View Auction Details</button>
+             </form>
+
+
+         </td>
+
     </tr>
     </tbody>
 </table>

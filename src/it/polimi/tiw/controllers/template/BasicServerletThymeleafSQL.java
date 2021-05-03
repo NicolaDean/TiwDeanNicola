@@ -1,15 +1,9 @@
-package it.polimi.tiw.controllers;
+package it.polimi.tiw.controllers.template;
 
-import it.polimi.tiw.managment.TemplateEngineGenerator;
 import it.polimi.tiw.managment.dbConnection;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.WebContext;
-import org.thymeleaf.templatemode.TemplateMode;
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -50,14 +44,6 @@ public class BasicServerletThymeleafSQL extends BasicServerletThymeleaf {
      * @throws ServletException exception of serverlet
      * @throws IOException input output exception
      */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request, response);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    }
 
     /**
      *

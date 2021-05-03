@@ -1,6 +1,8 @@
 package it.polimi.tiw.models;
 
-import java.sql.Date;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.concurrent.TimeUnit;
 
 public class Auction {
 
@@ -10,16 +12,18 @@ public class Auction {
     private int initialPrice;
     private int minimumOffer;
     private Date expiringDate;
+    private Offer maxOffer;
 
 
-    public Auction(int id,int userId,SalesItem item,int initialPrice,int minimumOffer,Date expiringDate)
+    public Auction(int id,int userId,SalesItem item,int initialPrice,int minimumOffer,java.sql.Date expiringDate,Offer maxOffer)
     {
         this.id           = id;
         this.userId       = userId;
         this.salesItem    = item;
         this.initialPrice = initialPrice;
         this.minimumOffer = minimumOffer;
-        this.expiringDate = new java.sql.Date(expiringDate.getTime());
+        this.expiringDate = new java.util.Date(expiringDate.getTime());
+        this.maxOffer     = maxOffer;
     }
 
     public int getId() {
@@ -42,6 +46,35 @@ public class Auction {
         return this.expiringDate;
     }
 
+    //TODO aggiongere una funzione per stampare in stringa una data formattata per bene
+
+    public String calculateExpiringTime()
+    {
+        Date now = new Date();
+
+        long difference = this.expiringDate.getTime() - now.getTime();
+        boolean expired = difference <= 0;
+
+        if (expired) difference = difference * -1;
+
+        int days    =   (int)(((difference/1000)/60)/60)/24;
+        int hours   =   (int)(((difference/1000)/60)/60)%24;
+        int minutes =   (int)(((difference/1000)/60)%60);
+        int seconds =   (int)((difference/1000)%60);
+
+        if(!expired)
+        {
+            return (days + " days " + hours+ " hours " + minutes + " min left");
+        }
+        else
+        {
+            return  ( "Expired " + days + " days ago");
+        }
+
+    }
+    public Offer getMaxOffer() {
+        return maxOffer;
+    }
 
     /**
      * Generate the path for this auction image

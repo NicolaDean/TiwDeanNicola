@@ -4,9 +4,11 @@ public class TemplatePaths {
 
     public static String errorPath = "";
     public static String loginPage = "index";
-    public static String homePage  = "/WEB-INF/TemplateHTML/home";
-    public static String header  = "/WEB-INF/TemplateHTML/header";
-    public static String footer  = "/WEB-INF/TemplateHTML/footer";
-    public static String auctionList  = "/WEB-INF/TemplateHTML/auctions";
+    public static String homePage       = "/WEB-INF/TemplateHTML/home";
+    public static String header         = "/WEB-INF/TemplateHTML/header";
+    public static String footer         = "/WEB-INF/TemplateHTML/footer";
+    public static String auctionList    = "/WEB-INF/TemplateHTML/auctions";
+    public static String auctionCreate  = "/WEB-INF/TemplateHTML/auctionCreation";
+    public static String auctionDetails  = "/WEB-INF/TemplateHTML/auctionDetails";
 
 }

@@ -16,6 +16,12 @@
     </div>
 
     <div class="col d-flex justify-content-center">
+        <div th:if="${errorMsg}" class="alert alert-warning" style="width:400px">
+            <p th:text="${''+ errorMsg}"></p>
+        </div>
+    </div>
+    <div class="col d-flex justify-content-center">
+
         <div  style="width:400px" >
             <div class="card-body">
                 <h4 class="card-title">Schermata di Login</h4>
@@ -42,15 +48,6 @@
 
     </div>
 
-    <form action="Auctions" method="post" >
-        <input type="file" name="immagine"/>
-        <button type="submit" class="btn btn-secondary">IMG</button>
-    </form>
-
-    <form action="autionCreation.html" method="post" >
-        <input type="file" name="immagine"/>
-        <button type="submit" class="btn btn-secondary">auctionCreator</button>
-    </form>
 
 </body>
 </html>
