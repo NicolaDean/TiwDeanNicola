@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="tiw.polimi.it:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>tiw.polimi.it</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="tiw.polimi.it-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="tiw.polimi.it:war exploded" />
+    </root>
+  </artifact>
+</component>
