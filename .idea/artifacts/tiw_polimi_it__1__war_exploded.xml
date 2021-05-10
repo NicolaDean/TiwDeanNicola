@@ -14,6 +14,7 @@
           <element id="module-output" name="tiw.polimi.it (1)" />
         </element>
         <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.8.5" />
           <element id="library" level="project" name="Maven: org.thymeleaf:thymeleaf:3.0.4.RELEASE" />
           <element id="library" level="project" name="Maven: ognl:ognl:3.1.12" />
           <element id="library" level="project" name="Maven: org.javassist:javassist:3.20.0-GA" />
