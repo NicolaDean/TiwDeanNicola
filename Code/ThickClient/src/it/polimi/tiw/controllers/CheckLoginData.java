@@ -35,7 +35,6 @@ public class CheckLoginData extends BasicServerlet {
         System.out.println("Input: " + email + " , "+ psw);
 
 
-
         UserDao dao = new UserDao(this.getConnection());
         User usr = null;
         try {
@@ -48,15 +47,10 @@ public class CheckLoginData extends BasicServerlet {
         {
             this.respondError("Username or password are wrong, try again",response);
             System.out.println("Errore");
-            return;
         }
         else
-            {
-
-                HttpSession session = request.getSession();
-                session.setAttribute("currentUser", usr);
-                this.sendJson(usr,response);
-
-            }
+        {
+            this.sendJson(usr,response);
+        }
     }
 }

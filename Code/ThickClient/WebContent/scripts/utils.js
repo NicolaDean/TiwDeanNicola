@@ -15,6 +15,16 @@ function makeCall(method, APIurl, formData, requestManagment, reset = true)
     }
 }
 
+/**
+ * If username is not saved in session then redirect to login page
+ */
+function checkLogin()
+{
+    if (sessionStorage.getItem("username") == null) {
+        window.location.href = "login.html";
+    }
+}
+
 function setVisible(component)
 {
     component.style.display = 'block';

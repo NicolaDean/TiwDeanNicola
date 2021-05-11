@@ -8,40 +8,56 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script src="scripts/utils.js"></script>
+<script src="scripts/showAuctions.js"></script>
+<script src="scripts/homeManager.js"></script>
+
 </head>
 <body>
 <!-- Image and text -->
 <nav th:fragment="header" class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">
-        <img src="/tiw_polimi_it_war/img/nicoLogo.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+        <img src="./img/nicoLogo.svg" width="30" height="30" class="d-inline-block align-top" alt="">
         Nicouction
     </a>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="home">UserProfile <span class="sr-only">(current)</span></a>
+                <a id ="user-profile-button" class="nav-link">UserProfile <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="Auctions">Search</a>
+            <li id ="search-button" class="nav-item">
+                <a class="nav-link">Search</a>
             </li>
         </ul>
     </div>
-    <form action="Logout">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" >Logout</button>
-    </form>
+
+    <button id ="logout-button" class="btn btn-outline-success my-2 my-sm-0">Logout</button>
 
 </nav>
+
     <div class="jumbotron text-center" style="margin-bottom:0">
-        <h1>Benvenutoo</h1>
+        <h1>Benvenutoo,<span id = "welcome-nickname"></span></h1>
         <p>Welcomee</p>
     </div>
 
+<p id = "error-msg">Nulla di che</p>
+<!-- here will appear auctions list-->
+    <div id="auctions-div">
 
-    <div class="col d-flex justify-content-center">
-
+    </div>
+<!-- here will appear auction details-->
+    <div id="auction-detail-div">
 
     </div>
 
+<!-- here will appear winned auction-->
+    <div id="winned-auction">
 
+    </div>
+<!-- here will appear auction creation form-->
+    <div id="creation-form">
+
+    </div>
 </body>
 </html>

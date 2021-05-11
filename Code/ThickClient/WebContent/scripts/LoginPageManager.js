@@ -16,30 +16,30 @@
             validateLogin(form)
         });
 
-function validateLogin(form){
-    makeCall("POST","Login",form,
-        function(req) {
-            if (req.readyState === XMLHttpRequest.DONE) {
-                var message = req.responseText;
-                switch (req.status) {
-                    case 200:
-                        sessionStorage.setItem('username', message);
-                        console.log(message);
-                        window.location.href = "index.html";
-                        break;
-                    case 400: // bad request
-                        setText(errorMsg,message + "error 400");
-                        break;
-                    case 401: // unauthorized
-                        setText(errorMsg,message + "error 401");
-                        break;
-                    case 500: // server error
-                        setText(errorMsg,message + "error 500");
-                        break;
+        function validateLogin(form){
+            makeCall("POST","Login",form,
+                function(req) {
+                    if (req.readyState === XMLHttpRequest.DONE) {
+                        var message = req.responseText;
+                        switch (req.status) {
+                            case 200:
+                                sessionStorage.setItem('username', message);
+                                console.log(message);
+                                window.location.href = "index.html";
+                                break;
+                            case 400: // bad request
+                                setText(errorMsg,message + "error 400");
+                                break;
+                            case 401: // unauthorized
+                                setText(errorMsg,message + "error 401");
+                                break;
+                            case 500: // server error
+                                setText(errorMsg,message + "error 500");
+                                break;
+                        }
+                    }
                 }
-            }
-        }
-    )};
+            )};
 })();
 
 

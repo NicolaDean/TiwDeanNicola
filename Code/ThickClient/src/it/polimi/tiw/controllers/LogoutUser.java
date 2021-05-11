@@ -12,11 +12,13 @@ import java.io.IOException;
 public class LogoutUser extends HttpServlet
 {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        session.removeAttribute("currentUser");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
 
-        response.sendRedirect(getServletContext().getContextPath() + "/");
+        response.sendRedirect(getServletContext().getContextPath() + "/login.html");
         return;
     }
 }
