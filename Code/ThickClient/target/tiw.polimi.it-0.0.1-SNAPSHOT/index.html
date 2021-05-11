@@ -23,28 +23,38 @@
     </a>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
-            <li class="nav-item active">
-                <a id ="user-profile-button" class="nav-link">UserProfile <span class="sr-only">(current)</span></a>
+            <li id ="user-profile-button" class="nav-item active">
+                <a  class="nav-link">UserProfile <span class="sr-only">(current)</span></a>
             </li>
             <li id ="search-button" class="nav-item">
                 <a class="nav-link">Search</a>
             </li>
         </ul>
     </div>
-
+    <span id="user-logged" style="padding-right: 10px"></span>
     <button id ="logout-button" class="btn btn-outline-success my-2 my-sm-0">Logout</button>
 
 </nav>
 
-    <div class="jumbotron text-center" style="margin-bottom:0">
+    <div id="welcome-message" class="jumbotron text-center" style="margin-bottom:0">
         <h1>Benvenutoo,<span id = "welcome-nickname"></span></h1>
-        <p>Welcomee</p>
     </div>
 
-<p id = "error-msg">Nulla di che</p>
+<p id = "error-msg">Error Msg</p>
 <!-- here will appear auctions list-->
     <div id="auctions-div">
+        <div class="col d-flex justify-content-center">
+            <form class="form-inline">
+                <div class="input-group mb-3">
+                    <input id="serach-filter" type="text" name="filter" class="form-control" placeholder="What do you want?" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button id="search-filter-button"class="btn btn-outline-success">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
 
+        <table id="auctions-table" class="table"></table>
     </div>
 <!-- here will appear auction details-->
     <div id="auction-detail-div">

@@ -1,5 +1,7 @@
 package it.polimi.tiw.controllers;
 
+import it.polimi.tiw.controllers.template.BasicServerlet;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +16,7 @@ import java.nio.file.Files;
  * this class allow you to get an image without knowing its real path inside the server
  */
 @WebServlet("/ImageGetter/*")
-public class ImageGetter extends HttpServlet {
+public class ImageGetter extends BasicServerlet {
 
     private String imgFolder= "";
 
@@ -32,25 +34,29 @@ public class ImageGetter extends HttpServlet {
      * @throws IOException exception
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String url = request.getPathInfo();
-        
+        System.out.println("Image Request recived-> " + url);
+
         if(url == null)
         {
+            System.out.println("Empty");
             return;
         }
 
         String imgName = URLDecoder.decode(url.substring(1), "UTF-8");
         File file = new File(imgFolder, url);
 
+        System.out.println("File Readed");
 
         response.setHeader("Content-Type", getServletContext().getMimeType(imgName));
         response.setHeader("Content-Length", String.valueOf(file.length()));
 
         response.setHeader("Content-Disposition", "inline; filename=\"" + file.getName() + "\"");
-
+        System.out.println("Type setted");
         Files.copy(file.toPath(), response.getOutputStream());
-
+        System.out.println("End request");
+        System.out.println("------------------------------");
     }
 }

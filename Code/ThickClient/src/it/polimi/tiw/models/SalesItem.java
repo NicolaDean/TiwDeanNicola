@@ -4,10 +4,10 @@ import it.polimi.tiw.managment.JsonSerializable;
 
 public class SalesItem extends JsonSerializable {
 
-    private int code;
-    private String name;
-    private String description;
-    private String fileFormat;
+    private int                 code;
+    private String              name;
+    private String              description;
+    transient private String    fileFormat;
 
     public SalesItem(int code,String name,String description,String fileFormat)
     {

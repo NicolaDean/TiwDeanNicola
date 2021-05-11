@@ -6,24 +6,27 @@ import java.util.Date;
 
 public class Auction extends JsonSerializable {
 
-    private int id;
-    private int userId;
-    private SalesItem salesItem;
-    private int initialPrice;
-    private int minimumOffer;
-    private Date expiringDate;
-    private Offer maxOffer;
-
+    private int             id;
+    private int             userId;
+    private SalesItem       salesItem;
+    private int             initialPrice;
+    private int             minimumOffer;
+    private Date            expiringDate;
+    private Offer           maxOffer;
+    private String          imgPath;
+    private String          remainingTime;
 
     public Auction(int id,int userId,SalesItem item,int initialPrice,int minimumOffer,java.sql.Date expiringDate,Offer maxOffer)
     {
-        this.id           = id;
-        this.userId       = userId;
-        this.salesItem    = item;
-        this.initialPrice = initialPrice;
-        this.minimumOffer = minimumOffer;
-        this.expiringDate = new java.util.Date(expiringDate.getTime());
-        this.maxOffer     = maxOffer;
+        this.id             = id;
+        this.userId         = userId;
+        this.salesItem      = item;
+        this.initialPrice   = initialPrice;
+        this.minimumOffer   = minimumOffer;
+        this.expiringDate   = new java.util.Date(expiringDate.getTime());
+        this.maxOffer       = maxOffer;
+        this.imgPath        = this.getImagePath(this.salesItem.getFileFormat());
+        this.remainingTime  = this.calculateExpiringTime();
     }
 
     public int getId() {

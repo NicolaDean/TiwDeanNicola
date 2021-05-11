@@ -25,6 +25,6 @@
 
     <context-param>
         <param-name>imgUpload</param-name>
-        <param-value>D:/TIW/UploadFolder</param-value>
+        <param-value>D:/TiwDeanNicola/UploadFolder</param-value>
     </context-param>
 </web-app>

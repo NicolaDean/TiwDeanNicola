@@ -25,6 +25,7 @@ function checkLogin()
     }
 }
 
+
 function setVisible(component)
 {
     component.style.display = 'block';
