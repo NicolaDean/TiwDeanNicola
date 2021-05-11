@@ -1,5 +1,6 @@
 package it.polimi.tiw.dao;
 
+import it.polimi.tiw.managment.JsonSerializable;
 import it.polimi.tiw.models.Auction;
 import it.polimi.tiw.models.Offer;
 import it.polimi.tiw.models.SalesItem;
@@ -106,11 +107,6 @@ public class AuctionDao {
             throw new SQLException();
         }
 
-        for(Auction a:auctions){
-            System.out.println("NOME:--> " + a.getSalesItem().getName());
-
-            System.out.println(a.getExpiringDate() + " -> " +a.calculateExpiringTime());
-        }
 
         return auctions;
     }
@@ -157,7 +153,7 @@ public class AuctionDao {
         }
         else
         {
-            return res.get(0);
+            return (Auction)res.get(0);
         }
 
     }

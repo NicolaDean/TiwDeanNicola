@@ -1,8 +1,10 @@
 package it.polimi.tiw.models;
 
+import it.polimi.tiw.managment.JsonSerializable;
+
 import java.util.Date;
 
-public class Auction {
+public class Auction extends JsonSerializable {
 
     private int id;
     private int userId;

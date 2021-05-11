@@ -5,33 +5,41 @@
         var login       = document.getElementById("login_button");
         var errorMsg    = document.getElementById("error-msg");
 
-        var a = 0;
 
         login.addEventListener("click",e =>{
             var form = e.target.closest("form");
-            errorMsg.style.display = 'none';
 
-            a=a+1;
+            setInvisible(errorMsg);
+
             console.log("Login clicked");
             //send to server
-            window.location.href = "index.html";
-            validateLogin()
+            validateLogin(form)
         });
 
-
-
-        function validateLogin()
-        {
-            if(a > 2)
-            {
-                errorMsg.style.display = 'block';
-                errorMsg.textContent = "Login avvenuto";
-            }
-            else
-            {
-                errorMsg.style.display = 'block';
-                errorMsg.textContent = "ERRORE";
+function validateLogin(form){
+    makeCall("POST","Login",form,
+        function(req) {
+            if (req.readyState === XMLHttpRequest.DONE) {
+                var message = req.responseText;
+                switch (req.status) {
+                    case 200:
+                        sessionStorage.setItem('username', message);
+                        console.log(message);
+                        window.location.href = "index.html";
+                        break;
+                    case 400: // bad request
+                        setText(errorMsg,message + "error 400");
+                        break;
+                    case 401: // unauthorized
+                        setText(errorMsg,message + "error 401");
+                        break;
+                    case 500: // server error
+                        setText(errorMsg,message + "error 500");
+                        break;
+                }
             }
         }
-
+    )};
 })();
+
+

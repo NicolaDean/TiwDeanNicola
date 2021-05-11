@@ -1,6 +1,9 @@
 package it.polimi.tiw.models;
 
-public class User {
+import com.google.gson.Gson;
+import it.polimi.tiw.managment.JsonSerializable;
+
+public class User extends JsonSerializable {
     private int id;
     private String email;
     private String name;
@@ -31,5 +34,6 @@ public class User {
     {
         return this.id;
     }
+
 
 }

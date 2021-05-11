@@ -1,11 +1,13 @@
 package it.polimi.tiw.controllers;
 
-import it.polimi.tiw.controllers.template.BasicServerletThymeleafSQL;
+import it.polimi.tiw.controllers.template.BasicServerlet;
 import it.polimi.tiw.dao.AuctionDao;
+import it.polimi.tiw.managment.JsonSerializable;
 import it.polimi.tiw.managment.TemplatePaths;
 import it.polimi.tiw.models.Auction;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "Auctions", value = "/Auctions")
-public class ShowAuctions extends BasicServerletThymeleafSQL {
+@MultipartConfig
+public class ShowAuctions extends BasicServerlet {
 
 
     @Override
@@ -34,13 +37,12 @@ public class ShowAuctions extends BasicServerletThymeleafSQL {
 
         if(!auctions.isEmpty())
         {
-            request.setAttribute("auctions",auctions);
-            this.templateRenderer(request,response,TemplatePaths.auctionList);
+            this.sendJson(auctions,response);
         }
         else
         {
             request.setAttribute("auctions",auctions);
-            this.setError(request,response,"No result found",TemplatePaths.auctionList);
+            this.respondError("No result found", response);
         }
 
     }

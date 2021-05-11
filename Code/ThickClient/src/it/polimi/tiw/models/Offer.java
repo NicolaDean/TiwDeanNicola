@@ -1,8 +1,10 @@
 package it.polimi.tiw.models;
 
+import it.polimi.tiw.managment.JsonSerializable;
+
 import java.util.Date;
 
-public class Offer {
+public class Offer extends JsonSerializable {
 
     String userName;
     int offer;

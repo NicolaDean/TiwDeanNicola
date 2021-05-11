@@ -1,6 +1,8 @@
 package it.polimi.tiw.models;
 
-public class SalesItem {
+import it.polimi.tiw.managment.JsonSerializable;
+
+public class SalesItem extends JsonSerializable {
 
     private int code;
     private String name;

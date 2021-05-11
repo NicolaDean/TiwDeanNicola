@@ -1,10 +1,11 @@
 package it.polimi.tiw.controllers;
 
-import it.polimi.tiw.controllers.template.BasicServerletThymeleafSQL;
+import it.polimi.tiw.controllers.template.BasicServerlet;
 import it.polimi.tiw.dao.AuctionDao;
 import it.polimi.tiw.dao.OfferDao;
 import it.polimi.tiw.managment.TemplatePaths;
 import it.polimi.tiw.models.Auction;
+import it.polimi.tiw.models.AuctionDetails;
 import it.polimi.tiw.models.Offer;
 
 import javax.servlet.ServletException;
@@ -16,7 +17,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @WebServlet(name = "ShowAuctionDetails", value = "/Details")
-public class ShowAuctionDetails extends BasicServerletThymeleafSQL {
+public class ShowAuctionDetails extends BasicServerlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -35,20 +36,20 @@ public class ShowAuctionDetails extends BasicServerletThymeleafSQL {
             Auction auction     = auctionDao.getAuctionById(auctionId);
             List<Offer> offerts = offerDao.getOffertById(auctionId);
 
+
+            AuctionDetails auctionDetails = new AuctionDetails(auction,offerts);
+
             if(auction == null ) throw new Exception("This acution does not exist");
 
-            request.setAttribute("auction",auction);
-            request.setAttribute("offerts",offerts);
-
-            this.templateRenderer(request,response, TemplatePaths.auctionDetails);
+            this.sendJson(auctionDetails,response);
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
 
-            this.setError(request,response,"SQL ERROR",TemplatePaths.auctionDetails);
+            this.respondError("SQL error", response);
         } catch (Exception e) {
             e.printStackTrace();
-            this.setError(request,response,e.getMessage(),TemplatePaths.auctionDetails);
+            this.respondError(e.getMessage(), response);
         }
 
     }

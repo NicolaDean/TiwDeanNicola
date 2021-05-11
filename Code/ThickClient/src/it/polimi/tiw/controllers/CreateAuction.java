@@ -1,6 +1,6 @@
 package it.polimi.tiw.controllers;
 
-import it.polimi.tiw.controllers.template.BasicServerletThymeleafSQL;
+import it.polimi.tiw.controllers.template.BasicServerlet;
 import it.polimi.tiw.dao.AuctionDao;
 import it.polimi.tiw.models.User;
 
@@ -23,7 +23,7 @@ import java.util.Date;
 
 @MultipartConfig
 @WebServlet(name = "CreateAuction", value = "/CreateAuction")
-public class CreateAuction  extends BasicServerletThymeleafSQL {
+public class CreateAuction  extends BasicServerlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
