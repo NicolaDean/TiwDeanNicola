@@ -10,6 +10,9 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <script src="scripts/utils.js"></script>
+<script src="scripts/userPage.js"></script>
+<script src="scripts/offerts.js"></script>
+<script src="scripts/auctionDetails.js"></script>
 <script src="scripts/showAuctions.js"></script>
 <script src="scripts/homeManager.js"></script>
 
@@ -42,7 +45,7 @@
 
 <p id = "error-msg">Error Msg</p>
 <!-- here will appear auctions list-->
-    <div id="auctions-div">
+    <div class="mt-3" id="auctions-div">
         <div class="col d-flex justify-content-center">
             <form class="form-inline">
                 <div class="input-group mb-3">
@@ -57,17 +60,80 @@
         <table id="auctions-table" class="table"></table>
     </div>
 <!-- here will appear auction details-->
-    <div id="auction-detail-div">
+    <div class="mt-3" id="auction-detail-div">
 
     </div>
 
-<!-- here will appear winned auction-->
-    <div id="winned-auction">
+<!-- here will appear the user profile-->
+    <div class="card-columns" id="user-profile" style="width: 70%;margin-left: 10%;">
+        <div class="card mr-3 ml-3 mt-3" >
+            <h5 class="card-title text-center mt-2">Open auctions</h5>
+            <div id="open-owned-auctions">
 
-    </div>
-<!-- here will appear auction creation form-->
-    <div id="creation-form">
+            </div>
+        </div>
+        <div class="card mr-3 ml-3 mt-3" >
+            <h5 class="card-title text-center mt-2">Closed auctions</h5>
+            <div id="closed-owned-auctions">
 
+            </div>
+        </div>
+        <div class="card mr-3 ml-3 mt-3" id="creation-form">
+            <h5 class="card-title text-center mt-2">Create a new auctions</h5>
+        </div>
     </div>
+
+
+<div class="row mt-3" style="width: 70%;margin-left: 20%;display: none;" >
+    <div class="card mr-3 ml-3 mt-3 col-3" style="width: 350px;">
+        <img class="card-img-top" style="height: 300px;" src="./ImageGetter/3/8.jpeg" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">DeathNote</h5><h6>( 5 days 10 hours left)</h6>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+
+            <h6 class="d-inline">Minimum offert: </h6><p class="d-inline"> 5$</p><br>
+            <h6 class="d-inline">Initial offert: </h6><p class="d-inline"> 5$</p><br>
+            <h6 class="d-inline">Current winner: </h6><p class="d-inline"> PAOLO with 5$</p><br>
+            <a href="#" class="btn btn-primary">Do an offer</a>
+        </div>
+    </div>
+    <div class="card mr-3 ml-3 mt-3 col-3" style="width: 350px;">
+        <img class="card-img-top" style="height: 300px;" src="./ImageGetter/1/1.png" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">DeathNote</h5><h6>( 5 days 10 hours left)</h6>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+
+            <h6 class="d-inline">Minimum offert: </h6><p class="d-inline"> 5$</p><br>
+            <h6 class="d-inline">Initial offert: </h6><p class="d-inline"> 5$</p><br>
+            <h6 class="d-inline">Current winner: </h6><p class="d-inline"> PAOLO with 5$</p><br>
+            <a href="#" class="btn btn-primary">Do an offer</a>
+        </div>
+    </div>
+    <div class="card mr-3 ml-3 mt-3 col-3" style="width: 350px;">
+        <img class="card-img-top" style="height: 300px;"src="./ImageGetter/2/2.png" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">DeathNote</h5><h6>( 5 days 10 hours left)</h6>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+
+            <h6 class="d-inline">Minimum offert: </h6><p class="d-inline"> 5$</p><br>
+            <h6 class="d-inline">Initial offert: </h6><p class="d-inline"> 5$</p><br>
+            <h6 class="d-inline">Current winner: </h6><p class="d-inline"> PAOLO with 5$</p><br>
+            <a href="#" class="btn btn-primary">Do an offer</a>
+        </div>
+    </div>
+    <div class="card mr-3 ml-3 mt-3 col-3" style="width: 350px;">
+        <img class="card-img-top" style="height: 300px;"src="./ImageGetter/1/500.png" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">DeathNote</h5><h6>( 5 days 10 hours left)</h6>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+
+            <h6 class="d-inline">Minimum offert: </h6><p class="d-inline"> 5$</p><br>
+            <h6 class="d-inline">Initial offert: </h6><p class="d-inline"> 5$</p><br>
+            <h6 class="d-inline">Current winner: </h6><p class="d-inline"> PAOLO with 5$</p><br>
+            <a href="#" class="btn btn-primary">Do an offer</a>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

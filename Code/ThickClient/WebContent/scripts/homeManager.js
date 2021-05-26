@@ -1,8 +1,6 @@
 (
     function ()
     {
-
-
         window.addEventListener("load", () => {
             checkLogin();
 
@@ -12,6 +10,10 @@
         }, false);
 
 
+        /**
+         * Print a welcome message with the username "welcome, jhon"
+         * @returns {*}
+         */
         function printWelcomeMessage()
         {
             var welcomeDiv  = document.getElementById("welcome-nickname");
@@ -25,27 +27,40 @@
             return username;
         }
 
+        /**
+         * hide the welcome message at the first user action
+         */
         function hideWelcomeMessage()
         {
             var welcome     = document.getElementById("welcome-message");
             setInvisible(welcome);
         }
 
+        /**
+         * load all usefull DOM element to controll all possible user action
+         * @param username
+         */
         function loadPage(username)
         {
 
+            var userId        = JSON.parse(sessionStorage.getItem('username')).id;
+
             var logout        = document.getElementById("logout-button");
             var search        = document.getElementById("search-button");
-            var userProfile   = document.getElementById("user-profile-button");
+            var usrProfileBtn = document.getElementById("user-profile-button");
             var errorMsg      = document.getElementById("error-msg");
             var userLogged    = document.getElementById("user-logged");
             var auctionDiv    = document.getElementById("auctions-div");
             var auctionDetail = document.getElementById("auction-detail-div");
-            var filter = document.getElementById("serach-filter");
+            var filter        = document.getElementById("serach-filter");
 
-            this.auction = new AuctionManager(auctionDiv);
-            this.auction.setInvisible();
+            this.userProfile    = new UserPage();
+            this.details        = new AuctionDetails();
+            this.auction        = new AuctionManager(auctionDiv,this.details);
 
+            this.auction    .setInvisible();
+            this.userProfile.setId(userId);
+            this.userProfile.setInvisible();
 
             userLogged.innerText = "Logged as: " + username;
 
@@ -74,13 +89,18 @@
              *  1. Hide all other elements
              *  2. Show user profile data (doneOfferts,Winned auction,AuctionsPage)
              */
-            userProfile.addEventListener("click", e=>{
-                console.log("usereProfile")
+            usrProfileBtn.addEventListener("click", e=>{
+                console.log("usereProfile");
+
                 this.hideAllElements();
+                this.userProfile.setVisible();
+                this.userProfile.load();
             });
 
 
-
+            /**
+             * hide all auctions (in real time) that dosnt contain the filter inserted with text input
+             */
             filter.addEventListener('input', (e) => {
                 this.auction.applyFilter(e.target.value);
             });
@@ -91,10 +111,11 @@
              */
             this.hideAllElements = function()
             {
-                this.auction.setInvisible();
+                this.details        .setInvisible();
+                this.auction        .setInvisible();
+                this.userProfile    .setInvisible();
                 hideWelcomeMessage();
                 setInvisible(errorMsg);
-                setInvisible(auctionDetail);
             }
         }
 

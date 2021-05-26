@@ -25,15 +25,14 @@ public class ShowAuctions extends BasicServerlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         AuctionDao auctionDao = new AuctionDao(this.getConnection());
 
-        String filter = request.getParameter("filter");
-
         List<Auction> auctions = new ArrayList<>();
+
         try {
-            auctions = auctionDao.getAuctionsFromNameOrDescription(filter);
-        } catch (
-                SQLException throwables) {
+            auctions = auctionDao.getAuctions();
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
 
         if(!auctions.isEmpty())
         {
@@ -41,7 +40,6 @@ public class ShowAuctions extends BasicServerlet {
         }
         else
         {
-            request.setAttribute("auctions",auctions);
             this.respondError("No result found", response);
         }
 

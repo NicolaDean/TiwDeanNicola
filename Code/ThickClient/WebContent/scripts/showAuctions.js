@@ -1,7 +1,7 @@
-function AuctionManager(auctionDiv) {
+function AuctionManager(auctionDiv,auctionDetails) {
 
+    this.detail     = auctionDetails;
     this.auctionDiv = auctionDiv;
-    this.detail = document.getElementById("auction-detail-div");
     this.table = document.getElementById("auctions-table");
     this.data  = JSON.parse("{}");
 
@@ -19,6 +19,13 @@ function AuctionManager(auctionDiv) {
         self.table.innerHTML = "";
     }
 
+    /**
+     * print item sales description and name
+     * @param name
+     * @param description
+     * @param remainingTime
+     * @param row
+     */
     function printItemData(name,description,remainingTime,row)
     {
         var col          = document.createElement("td");
@@ -36,6 +43,12 @@ function AuctionManager(auctionDiv) {
 
         row.appendChild(col);
     }
+
+    /**
+     * Print the image of this object
+     * @param imgPath
+     * @param row
+     */
     function printImg(imgPath,row)
     {
         var col          = document.createElement("td");
@@ -48,7 +61,13 @@ function AuctionManager(auctionDiv) {
         col.appendChild(img);
         row.appendChild(col);
     }
-    function printDetailButton(id,row)
+
+    /**
+     * Add button with event handler to open auction details
+     * @param auction
+     * @param row
+     */
+    this.printDetailButton = function (auction,row)
     {
         var self = this;
         var col          = document.createElement("td");
@@ -56,24 +75,22 @@ function AuctionManager(auctionDiv) {
 
         btn.textContent  = "Auction Details"
         btn.className    = "btn btn-outline-success";
-        btn.id           = "auction-detail-"+id;
+        btn.id           = "auction-detail-"+auction.id;
 
         btn.addEventListener("click",e=>{
 
             var auc = document.getElementById("auctions-div");
-            var detail = document.getElementById("auction-detail-div");
-            //this.setInvisible();
-
             setInvisible(auc);
-            setVisible(detail);
-            detail.innerText = "DETTAGLI -> "+ id;
+            self.detail.setVisible();
+            self.detail.show(auction);
         });
 
         col.appendChild(btn);
         row.appendChild(col);
     }
-    function printAuction(auction)
+    this.printAuction = function (auction)
     {
+        var self = this;
         console.log(auction);
 
         var row         = document.createElement("tr");
@@ -82,11 +99,11 @@ function AuctionManager(auctionDiv) {
 
         printImg(auction.imgPath,row);
         printItemData(auction.salesItem.name,auction.salesItem.description,auction.remainingTime,row);
-        printDetailButton(auction.id,row);
-        self.table.appendChild(row);
+        this.printDetailButton(auction,row);
+        this.table.appendChild(row);
         //container.appendChild(row);
     }
-    function parseJsonAuctions(auctions)
+    this.parseJsonAuctions = function (auctions)
     {
         var self = this;
         self.table = document.getElementById("auctions-table");
@@ -95,7 +112,7 @@ function AuctionManager(auctionDiv) {
         console.log(json);
 
         json.forEach(function (auction){
-            printAuction(auction);
+            self.printAuction(auction);
         });
 
         //container.appendChild(self.table);
@@ -134,7 +151,7 @@ function AuctionManager(auctionDiv) {
                     case 200:
                         console.log(message);
                         self.data= JSON.parse(message);
-                        parseJsonAuctions(message,self.auctionDiv);
+                        self.parseJsonAuctions(message,self.auctionDiv);
                         break;
                     case 400: // bad request
                         setText(errorMsg,message + "error 400");

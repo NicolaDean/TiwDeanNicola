@@ -112,30 +112,27 @@ public class AuctionDao {
     }
 
 
-    /**
-     *
-     * @param Filter Filter for the auction search
-     * @return a list of auctions with name and description keyword
-     * @throws SQLException if something goes wrong
-     */
-    public List<Auction> getAuctionsFromNameOrDescription(String Filter) throws SQLException {
 
-        if(Filter == null)
-        {
-            return getAuctions();
-
-        }
-
-        String query = "select * from auctionsData where (expiringDate > CURRENT_TIME()) and (name LIKE '%"+Filter+"%' or description LIKE '%"+Filter+"%') order by expiringDate ASC";
-
-        System.out.println(query);
+    public List<Auction> getOpenAuctions(int userid) throws SQLException {
+        String query = "select * from auctionsData where (userid=?) AND (expiringDate > CURRENT_TIME()) order by expiringDate asc";
         PreparedStatement statement = connection.prepareStatement(query);
+
+        statement.setInt(1,userid);
+        return executeAuctionSelect(statement);
+    }
+
+    public List<Auction> getClosedAuctions(int userid) throws SQLException {
+        String query = "select * from auctionsData where (userid=?) AND (expiringDate < CURRENT_TIME()) order by expiringDate asc";
+        PreparedStatement statement = connection.prepareStatement(query);
+
+        statement.setInt(1,userid);
         return executeAuctionSelect(statement);
     }
 
     public List<Auction> getAuctions() throws SQLException {
         String query = "select * from auctionsData where expiringDate > CURRENT_TIME() order by expiringDate asc";
         PreparedStatement statement = connection.prepareStatement(query);
+
 
         return executeAuctionSelect(statement);
     }
