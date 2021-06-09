@@ -30,8 +30,6 @@ public class BasicServerletThymeleafSQL extends BasicServerletThymeleaf {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
 

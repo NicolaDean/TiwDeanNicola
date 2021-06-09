@@ -29,7 +29,7 @@
         <div  style="width:500px">
             <p> You are a seller?? Manage here your auctions</p>
             <div class="input-group mb-3">
-                <form action="Create" class="form-inline my-2 my-lg-0">
+                <form action="SellerPage" class="form-inline my-2 my-lg-0">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit" >Seller Page></button>
                 </form>
             </div>
@@ -37,9 +37,30 @@
     </div>
     <div class="col justify-content-center">
         <h1>WINNED AUCTIONS</h1>
-        <p>Auction1</p><br>
-        <p>Auction2</p><br>
-        <p>Auction3</p><br>
+        <div class="card mr-3 ml-3 mt-3">
+            <h5 class="card-title text-center mt-2">Those list contains all the auctions you win!!!</h5>
+            <div id="closed-owned-auctions">
+                <table class="table">
+                    <tr th:each="a : ${winned}">
+                        <td>
+                            <div class="col">
+                                <div class="row">
+                                    <a th:href="'Details?auction='+${a.id}"><h5 th:text="${a.getSalesItem().getName()} + ' (id: '+ ${a.id}+')   '"></h5></a>
+                                </div>
+                                <div class="row">
+                                    <h6>Max Offert: </h6><p th:text="${a.getMaxOffer().getOffer()} + ' $'"></p>
+                                </div>
+                                <div class="row" th:text= "${a.calculateExpiringTime()}">
+                                </div>
+                                <div class="row" >
+                                    <h6>Shipping address: </h6><p th:text= " ' ' +${a.getAddress().getAddress()} + ' ' + ${a.getAddress().getCity()} + ', ' + ${a.getAddress().getCap()} + ' - ' + ${a.getAddress().getCountry()} "></p>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
 
 

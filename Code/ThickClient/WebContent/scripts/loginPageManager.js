@@ -8,9 +8,7 @@
 
         login.addEventListener("click",e =>{
             var form = e.target.closest("form");
-
             setInvisible(errorMsg);
-
             console.log("Login clicked");
             //send to server
             validateLogin(form)
@@ -25,7 +23,7 @@
                             case 200:
                                 sessionStorage.setItem('username', message);
                                 console.log(message);
-                                window.location.href = "index.html";
+                                window.location.href = "home.html";
                                 break;
                             case 400: // bad request
                                 setText(errorMsg,message + "error 400");

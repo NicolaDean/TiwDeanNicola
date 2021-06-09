@@ -2,10 +2,7 @@ package it.polimi.tiw.dao;
 
 import it.polimi.tiw.models.Offer;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,7 +35,7 @@ public class OfferDao {
                 Offer o = new Offer(
                         resultSet.getString("name"),
                         resultSet.getInt("offer"),
-                        resultSet.getDate("offerDate")
+                        resultSet.getTimestamp("offerDate")
                 );
                 offerts.add(o);
 
@@ -78,7 +75,7 @@ public class OfferDao {
         statement.setInt(1,userId);
         statement.setInt(2,auctionid);
         statement.setInt(3,offer);
-        statement.setDate(4,new java.sql.Date(today.getTime()));
+        statement.setTimestamp(4,new Timestamp(today.getTime()));
 
         statement.executeUpdate();
 

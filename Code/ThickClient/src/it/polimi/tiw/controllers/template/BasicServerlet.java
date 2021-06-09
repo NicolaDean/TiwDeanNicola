@@ -86,6 +86,8 @@ public class BasicServerlet extends HttpServlet {
         try {
             PrintWriter printer = this.setJsonResponse(response);
             String out = JsonSerializable.listSerializartion((list));
+
+            System.out.println(out);
             printer.println(out);
         } catch (IOException e) {
             e.printStackTrace();

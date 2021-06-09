@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div th:replace="/WEB-INF/TemplateHTML/header :: header"> </div>
+
+    <div class="card-columns" id="user-profile" style="width: 70%; margin-left: 10%; display: block;">
+        <div class="card mr-3 ml-3 mt-3">
+            <h5 class="card-title text-center mt-2">Open auctions</h5>
+            <div id="open-owned-auctions">
+                <table class="table">
+                    <tr th:each="a : ${auctions.getOpen()}">
+                        <td>
+                            <div class="col">
+                                <div class="row">
+                                    <a th:href="'Details?auction='+${a.id}"><h5 th:text="${a.getSalesItem().getName()} + ' (id: '+ ${a.id}+')   '"></h5></a>
+                                </div>
+                                <div class="row">
+                                    <h6>Max Offert: </h6><p th:text="${a.getMaxOffer().getOffer()}"></p>
+                                </div>
+                                <div class="row" th:text= "${a.calculateExpiringTime()}">
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+        <div class="card mr-3 ml-3 mt-3">
+            <h5 class="card-title text-center mt-2">Closed auctions</h5>
+            <div id="closed-owned-auctions">
+                <table class="table">
+                    <tr th:each="a : ${auctions.getClosed()}">
+                        <td>
+                            <div class="col">
+                                <div class="row">
+                                    <a th:href="'Details?auction='+${a.id}"><h5 th:text="${a.getSalesItem().getName()} + ' (id: '+ ${a.id}+')   '"></h5></a>
+                                </div>
+                                <div class="row">
+                                    <h6>Max Offert: </h6><p th:text="${a.getMaxOffer().getOffer()}"></p>
+                                </div>
+                                <div class="row" th:text= "${a.calculateExpiringTime()}">
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="card mr-3 ml-3 mt-3" id="creation-form">
+                <h5 class="card-title text-center mt-2">
+                    <a href="Create"> Create a new auctions</a>
+                </h5>
+        </div>
+    </div>
+</body>
+</html>

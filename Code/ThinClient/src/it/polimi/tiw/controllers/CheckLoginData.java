@@ -53,9 +53,5 @@ public class CheckLoginData extends BasicServerletThymeleafSQL {
 
                 response.sendRedirect(getServletContext().getContextPath() + "/home");
             }
-
-
-
-
     }
 }

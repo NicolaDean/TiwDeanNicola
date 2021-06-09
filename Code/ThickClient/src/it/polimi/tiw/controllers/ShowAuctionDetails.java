@@ -23,15 +23,17 @@ public class ShowAuctionDetails extends BasicServerlet {
 
         String input = request.getParameter("auction");
 
-        OfferDao   offerDao   = new OfferDao(this.getConnection());
+        OfferDao   offerDao = new OfferDao(this.getConnection());
+        AuctionDao dao      = new AuctionDao(this.getConnection());
 
         try {
             if(input == null ) throw new Exception("No auction specified");
 
             int auctionId = Integer.parseInt(input);
-            List<Offer> offerts = offerDao.getOffertById(auctionId);
-
-            this.sendJson(offerts,response);
+            System.out.println("Details printing -> "+ auctionId);
+            Auction auction = dao.getAuctionById(auctionId);
+            auction.setOfferts(offerDao.getOffertById(auctionId));
+            this.sendJson(auction,response);
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();

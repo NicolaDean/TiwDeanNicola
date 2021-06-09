@@ -16,7 +16,7 @@ import java.io.IOException;
  */
 public class BasicServerletThymeleaf extends HttpServlet {
 
-    private TemplateEngine templateEngine;
+    protected TemplateEngine templateEngine;
 
     /**
      * Initialize Thymeleaf template Engine and DB connection
@@ -83,9 +83,12 @@ public class BasicServerletThymeleaf extends HttpServlet {
      */
     public void templateRenderer(HttpServletRequest request, HttpServletResponse response,String path) throws IOException {
         ServletContext context = getServletContext();
+        genericTemplateRenderer(context,this.templateEngine,request,response,path);
+    }
 
+    public static void genericTemplateRenderer(ServletContext context,TemplateEngine engine,HttpServletRequest request, HttpServletResponse response,String path) throws IOException {
         WebContext ctx = new WebContext(request, response, context, request.getLocale());
-        this.templateEngine.process(path,ctx,response.getWriter());
+        engine.process(path,ctx,response.getWriter());
     }
 
 }

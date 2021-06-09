@@ -1,13 +1,8 @@
 package it.polimi.tiw.dao;
 
-import it.polimi.tiw.models.Auction;
-import it.polimi.tiw.models.Offer;
-import it.polimi.tiw.models.SalesItem;
+import it.polimi.tiw.models.*;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,7 +16,7 @@ public class AuctionDao {
         this.connection = connection;
     }
 
-    public int createAution(int userid, String name, String description, String fileFormat, Date expiringDate, int initialOffer, int minimumOffer)
+    public int createAution(int userid, String name, String description, String fileFormat, Timestamp expiringDate, int initialOffer, int minimumOffer)
     {
         SalesItemDao salesItemDao = new SalesItemDao(this.connection);
         PreparedStatement queryParameters = null;
@@ -41,7 +36,9 @@ public class AuctionDao {
             queryParameters.setInt(2,salesItemid);
             queryParameters.setInt(3,initialOffer);
             queryParameters.setInt(4,minimumOffer);
-            queryParameters.setDate(5,new java.sql.Date(expiringDate.getTime()));
+
+            System.out.println("Create -> " + expiringDate);
+            queryParameters.setTimestamp(5,expiringDate);
 
             queryParameters.executeUpdate();
 
@@ -73,7 +70,7 @@ public class AuctionDao {
             {
                 SalesItem item =
                         new SalesItem(
-                            queryResult.getInt("itemId"),
+                            queryResult.getInt(   "itemId"),
                             queryResult.getString("name"),
                             queryResult.getString("description"),
                             queryResult.getString("fileFormat")
@@ -82,8 +79,15 @@ public class AuctionDao {
                 Offer offer =
                         new Offer(
                                 queryResult.getString("userName"),
-                                queryResult.getInt("maxOffer"),
-                                queryResult.getDate("maxOfferDate")
+                                queryResult.getInt(   "maxOffer"),
+                                queryResult.getTimestamp(  "maxOfferDate")
+                        );
+                Address address =
+                        new Address(
+                                queryResult.getString("address"),
+                                queryResult.getString("city"),
+                                queryResult.getInt(   "cap"),
+                                queryResult.getString("country")
                         );
 
                 Auction auction   =
@@ -93,8 +97,10 @@ public class AuctionDao {
                             item,
                             queryResult.getInt("initialPrize"),
                             queryResult.getInt("minimumOffer"),
-                            queryResult.getDate("expiringDate"),
-                            offer
+                            queryResult.getTimestamp("expiringDate"),
+                            offer,
+                            address,
+                            queryResult.getBoolean("closed")
                         );
 
                 auctions.add(auction);
@@ -115,7 +121,52 @@ public class AuctionDao {
         return auctions;
     }
 
+    public void setAuctionClosed(int id) throws SQLException {
+        if(getAuctionById(id).isClosable())
+        {
+            String query = "update auctions set closed = true  where (id=?)";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1,id);
 
+            statement.executeUpdate();
+        }
+
+    }
+
+    public List<Auction> getOpenAuctions(int userid) throws SQLException {
+        String query = "select * from auctionsData where (userid=?) AND (expiringDate > CURRENT_TIME()) order by expiringDate asc";
+        PreparedStatement statement = connection.prepareStatement(query);
+
+        statement.setInt(1,userid);
+        return executeAuctionSelect(statement);
+    }
+
+    public List<Auction> getClosedAuctions(int userid) throws SQLException {
+        String query = "select * from auctionsData where (userid=?) AND (expiringDate < CURRENT_TIME()) order by expiringDate asc";
+        PreparedStatement statement = connection.prepareStatement(query);
+
+        statement.setInt(1,userid);
+        return executeAuctionSelect(statement);
+    }
+
+    /**
+     * Extract all opened and closed auctions of a specific user id
+     * @param userid
+     * @return
+     * @throws SQLException
+     */
+    public UserProfileData getUserProfileData(int userid) throws SQLException {
+
+        return new UserProfileData(getOpenAuctions(userid),getClosedAuctions(userid));
+    }
+
+    public List<Auction> getWinnedAuctions(int userid) throws SQLException {
+        String query = "select * from auctionsData where expiringDate < CURRENT_TIME() and winnerId =?";
+        PreparedStatement statement = connection.prepareStatement(query);
+
+        statement.setInt(1,userid);
+        return executeAuctionSelect(statement);
+    }
     /**
      *
      * @param Filter Filter for the auction search

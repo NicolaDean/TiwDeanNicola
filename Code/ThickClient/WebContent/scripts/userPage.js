@@ -1,13 +1,14 @@
 
-function UserPage()
+function UserPage(auctionDetails)
 {
     this.id = -1;
     this.container                  = document.getElementById("user-profile");
     this.openAuctions               = document.getElementById("open-owned-auctions");
     this.closedAuctions             = document.getElementById("closed-owned-auctions");
-    this.errorMsg                   = document.getElementById("closed-owned-auctions");
+    this.errorMsg                   = document.getElementById("error-msg");
     this.openAuctionsData           = JSON.parse("{}");
     this.closedAuctionsData         = JSON.parse("{}");
+    this.detail                     = auctionDetails;
 
     console.log("Created user page");
     console.log(this.container);
@@ -35,27 +36,64 @@ function UserPage()
         this.id = id;
     }
 
-    this.parseUserData = function ()
+    this.printAuction = function (container,auction)
     {
-        //NOME CODICE MAX OFFER E TEMPO MANCANTE EXPIRING DATE
+        var col = getDiv("auction-col" );
+        var r1  = getDiv("auction-row1");
+        var r2  = getDiv("auction-row2");
+        var r3  = getDiv("auction-row2");
+
+        col.className = "col";
+        r1.className = "r1";
+        r2.className = "r2";
+        r3.className = "r3";
+
+        var name = getLinkTitle(5,"#",(auction.salesItem.name + "(ID:" +auction.id +")"));
 
         var self = this;
 
+        name.addEventListener("click", e=>{
+            self.setInvisible();
+            self.detail.setVisible();
+            self.detail.show(auction);
+        })
+
+        r1.appendChild(name);
+        r2.appendChild(getTitle(6,"","Max Offert: "));
+        r2.appendChild(getParagraph("",auction.maxOffer.offer + " $"));
+        r3.appendChild(getParagraph("","Expire: " + auction.date));
+
+        col.appendChild(r1);
+        col.appendChild(r2);
+        col.appendChild(r3);
+
+        container.appendChild(col)
+    }
+
+    this.printAuctions = function(container,auctions)
+    {
+        var self = this;
+
         var table = document.createElement("table");
-
-
-
-        self.closedAuctionsData.forEach(function (auction){
+        
+        auctions.forEach(function (auction){
             var tr = document.createElement("tr");
             var td = document.createElement("td");
 
-            td.innerText = auction.salesItem.name;
+            self.printAuction(td,auction);
+            //td.innerText = auction.salesItem.name;
 
             tr.appendChild(td);
             table.appendChild(tr);
+            table.className="table";
         });
-        self.closedAuctions.appendChild(table);
-
+        container.appendChild(table);
+    }
+    this.parseUserData = function ()
+    {
+        //NOME CODICE MAX OFFER E TEMPO MANCANTE EXPIRING DATE
+        this.printAuctions(this.openAuctions,this.openAuctionsData);
+        this.printAuctions(this.closedAuctions,this.closedAuctionsData);
     }
 
     this.assignData = function(json)

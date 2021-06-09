@@ -37,7 +37,6 @@ public class ImageGetter extends BasicServerlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String url = request.getPathInfo();
-        System.out.println("Image Request recived-> " + url);
 
         if(url == null)
         {
@@ -48,15 +47,12 @@ public class ImageGetter extends BasicServerlet {
         String imgName = URLDecoder.decode(url.substring(1), "UTF-8");
         File file = new File(imgFolder, url);
 
-        System.out.println("File Readed");
-
         response.setHeader("Content-Type", getServletContext().getMimeType(imgName));
         response.setHeader("Content-Length", String.valueOf(file.length()));
 
         response.setHeader("Content-Disposition", "inline; filename=\"" + file.getName() + "\"");
-        System.out.println("Type setted");
+
         Files.copy(file.toPath(), response.getOutputStream());
-        System.out.println("End request");
-        System.out.println("------------------------------");
+
     }
 }

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+<meta charset="utf-8">
+<title>Nicomane Aste</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script src="scripts/utils.js"></script>
+<script src="scripts/userPage.js"></script>
+<script src="scripts/offerts.js"></script>
+<script src="scripts/auctionDetails.js"></script>
+<script src="scripts/showAuctions.js"></script>
+<script src="scripts/homeManager.js"></script>
+<script src="scripts/auctionCreation.js"></script>
+</head>
+<body>
+<!-- Image and text -->
+<nav  class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+        <img src="./img/nicoLogo.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+        Nicouction
+    </a>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li id ="user-profile-button" class="nav-item active">
+                <a  class="nav-link">UserProfile <span class="sr-only">(current)</span></a>
+            </li>
+            <li id ="search-button" class="nav-item">
+                <a class="nav-link">Search</a>
+            </li>
+        </ul>
+    </div>
+    <span id="user-logged" style="padding-right: 10px"></span>
+
+    <button id ="logout-button" class="btn btn-outline-success my-2 my-sm-0">Logout</button>
+
+
+</nav>
+
+    <div id="welcome-message" class="jumbotron text-center" style="margin-bottom:0">
+        <h1>Benvenutoo,<span id = "welcome-nickname"></span></h1>
+    </div>
+
+<p id = "error-msg">Error Msg</p>
+<!-- here will appear auctions list-->
+    <div class="mt-3" id="auctions-div">
+        <div class="col d-flex justify-content-center">
+            <form class="form-inline">
+                <div class="input-group mb-3">
+                    <input id="serach-filter" type="text" name="filter" class="form-control" placeholder="What do you want?" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button id="search-filter-button"class="btn btn-outline-success">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <table id="auctions-table" class="table"></table>
+    </div>
+<!-- here will appear auction details-->
+    <!--<div class="mt-3" id="auction-detail-div">
+
+    </div>-->
+<div class="mt-3" id="auction-detail-div" style="display: block;">
+    <div class="row" id="auction-details-container">
+        <div class="col-4"><div class="row">
+            <img id="auction-details-img" src="./Display Autions_files/5.jpeg" width="400">
+        </div>
+            <div class="row">
+
+            </div>
+            <div class="row">
+
+            </div></div>
+        <div class="col-5">
+            <div class="row">
+                <h1 id="auction-details-name">Gatto</h1>
+                <h2 id="auction-details-id">(ID:4)</h2>
+            </div>
+
+            <div class="row">
+                <h4 id="auction-details-remaining-time">15 days 1 hours 57 min left</h4>
+            </div>
+            <div class="row">
+                <p id="auction-details-description">ciao sono un gatto </p>
+            </div>
+            <div class="row">
+
+            </div>
+            <div class="row">
+
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="row">
+                <h6>Expiring Date: </h6><p id="details-expiring-date">ven, 25 giu 2021 00:33</p>
+            </div>
+            <div class="row">
+                <div class="row">
+                    <div class="col"><h6>Start Price:</h6></div>
+                    <div class="col" ><p id="details-start-price"> 2 $</p></div>
+                </div>
+                <div class="row">
+                    <div class="col"><h6>Minimum Offer:</h6></div>
+                    <div class="col"><p id="details-minimum-offert"> 1 $</p></div>
+                </div>
+            </div>
+            <div class="row">
+                <form action="#" class="form-inline my-2 my-lg-0">
+                    <div class="input-group mb-3">
+                        <input name="offer" type="number" class="form-control" id="inputNumber" placeholder="Make an offer">
+                        <input  type="hidden" id="auction-id-offer-input" name="auctionid" value="4">
+                        <input type="button"  class="btn btn-outline-success my-2 my-sm-0" id="send-offer-details">Send</button>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <div id="auction-details-max-offert" class="card text-white bg-dark mb-3">
+
+                </div>
+            </div>
+            <div class="row">
+                <div id="auction-details-all-offerts" style="width: 90%;">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- here will appear the user profile-->
+    <div class="card-columns" id="user-profile" style="width: 75%;margin-left: 10%;">
+        <div class="card mr-3 ml-3 mt-3" >
+            <h5 class="card-title text-center mt-2">Open auctions</h5>
+            <div id="open-owned-auctions">
+
+            </div>
+        </div>
+        <div class="card mr-3 ml-3 mt-3" >
+            <h5 class="card-title text-center mt-2">Closed auctions</h5>
+            <div id="closed-owned-auctions">
+
+            </div>
+        </div>
+        <div class="card mr-3 ml-3 mt-3" id="creation-form">
+            <h5 class="card-title text-center mt-2">
+                <a id="create-auction-show-button"href="#"> Create a new auctions</a>
+            </h5>
+        </div>
+    </div>
+
+</div>
+<div  class="col d-flex justify-content-center">
+    <div  style="width:700px" >
+        <form id = "auction-creation-form" action="#">
+            <input name="file"  type="file" accept=".png,.jpg,.jpeg,.webp">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Auction's item</span>
+                </div>
+                <input name="name" type="text" class="form-control" placeholder="Name">
+                <div class="custom-file">
+                    <input name="filee"  type="file" accept=".png,.jpg,.jpeg,.webp" class="custom-file-input" id="customFile">
+                    <label class="custom-file-label" for="customFile">Choose an image</label>
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <textarea  name="description" type="text" class="form-control" placeholder="Insert a small description..."/></textarea>
+            </div>
+
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Offert details [ $ ]</span>
+                </div>
+                <input name="minimumOffer" type="number"class="form-control"  id="inputNumber" placeholder="Minimum offer">
+                <input name="initialOffer" type="number" class="form-control" id="inputNumber" placeholder="Start offer" >
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Expiring Date</span>
+                </div>
+                <input name="expiringDate" type="datetime-local" id="expiringDate"
+                       value="2021-04-12T19:30"
+                       min="2021-04-12T00:00" max="2050-06-14T00:00">
+            </div>
+            <input type="button" id="auction-creation-button" class="btn btn-primary">CREATE AUCTION</input>
+        </form>
+    </div>
+</div>
+</body>
+</html>

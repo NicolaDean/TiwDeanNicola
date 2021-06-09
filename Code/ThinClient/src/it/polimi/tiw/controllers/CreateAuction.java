@@ -51,14 +51,18 @@ public class CreateAuction  extends BasicServerletThymeleafSQL {
 
         //TRY TO PARS DATA
         Date expiringData = null;
-
+        java.sql.Timestamp timestamp = null;
         String rawData = request.getParameter("expiringDate");
         DateFormat formattedData = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
         try {
             expiringData =  formattedData.parse(rawData);
+            long time = expiringData.getTime();
+            timestamp = new java.sql.Timestamp(time);
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+
 
 
         Part filePart = request.getPart("file");
@@ -70,12 +74,13 @@ public class CreateAuction  extends BasicServerletThymeleafSQL {
         String imgFormat =filePart.getContentType();
         imgFormat="."+imgFormat.substring(imgFormat.lastIndexOf("/")+1);
 
+
         int itemId = 0;
         itemId = auctionDao.createAution(   user.getId(),
                                             request.getParameter("name"),
                                             request.getParameter("description"),
                                             imgFormat,
-                                            expiringData,
+                                            timestamp,
                                             initialOffer,
                                             minimumOffer
         );

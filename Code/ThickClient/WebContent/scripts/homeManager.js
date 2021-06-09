@@ -53,14 +53,22 @@
             var auctionDiv    = document.getElementById("auctions-div");
             var auctionDetail = document.getElementById("auction-detail-div");
             var filter        = document.getElementById("serach-filter");
+            var showCreate    = document.getElementById("create-auction-show-button");
 
-            this.userProfile    = new UserPage();
+
             this.details        = new AuctionDetails();
+            this.userProfile    = new UserPage(this.details);
             this.auction        = new AuctionManager(auctionDiv,this.details);
+            this.creation       = new AuctionCreation();
 
-            this.auction    .setInvisible();
-            this.userProfile.setId(userId);
-            this.userProfile.setInvisible();
+            this.creation       .initialize();
+            this.userProfile    .setId(userId);
+
+            this.details        .setInvisible();
+            this.auction        .setInvisible();
+            this.userProfile    .setInvisible();
+            this.creation       .setInvisible();
+            setInvisible(errorMsg);
 
             userLogged.innerText = "Logged as: " + username;
 
@@ -70,9 +78,14 @@
             logout.addEventListener("click",e =>{
                 console.log("logout");
                 sessionStorage.removeItem('username');
-                window.location.href = "login.html";
+                window.location.href = "Logout";
             });
 
+
+            showCreate.addEventListener("click", e=>{
+                this.hideAllElements();
+                this.creation.setVisible();
+            })
             /**
              *  1.Hide all other elements
              *  2.Reset content table
@@ -105,7 +118,6 @@
                 this.auction.applyFilter(e.target.value);
             });
 
-
             /**
              * hide all elements in the page
              */
@@ -114,6 +126,7 @@
                 this.details        .setInvisible();
                 this.auction        .setInvisible();
                 this.userProfile    .setInvisible();
+                this.creation       .setInvisible();
                 hideWelcomeMessage();
                 setInvisible(errorMsg);
             }

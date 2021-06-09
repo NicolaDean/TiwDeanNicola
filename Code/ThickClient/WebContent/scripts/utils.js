@@ -22,7 +22,7 @@ function makeCall(method, APIurl, formData, requestManagment, reset = true)
 function checkLogin()
 {
     if (sessionStorage.getItem("username") == null) {
-        window.location.href = "login.html";
+        window.location.href = "index.html";
     }
 }
 
@@ -135,4 +135,13 @@ function getDiv(id)
     elem.id = id;
 
     return elem;
+}
+
+function getLinkTitle(size,link,text)
+{
+    var a = document.createElement("a");
+    a.href = link;
+    a.appendChild(getTitle(size,"",text));
+    console.log(a);
+    return a;
 }

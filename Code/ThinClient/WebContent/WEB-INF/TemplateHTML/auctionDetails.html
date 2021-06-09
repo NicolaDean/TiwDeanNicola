@@ -12,42 +12,90 @@
 <body>
 <div th:replace="/WEB-INF/TemplateHTML/header :: header"> </div>
 
-<div th:if="${auction && offerts}" >
+<div th:if="${auction && offerts}" class="mt-3" id="auction-detail-div" style="display: block;">
+    <div class="row" id="auction-details-container">
+        <div class="col-4"><div class="row">
+            <img id="auction-details-img" th:src="@{${'ImageGetter/'+ auction.getImagePath(auction.getSalesItem().getFileFormat())}}" width="400">
+        </div>
+            <div class="row">
 
-    <div class="col d-flex justify-content-center">
-        <div class="row" style="width:800px" >
-            <div class="col">
-                <img th:src="@{${'ImageGetter/'+ auction.getImagePath(auction.getSalesItem().getFileFormat())}}" width="150px" height="150px"/>
             </div>
-            <div class="col">
-                <div class="row ">
-                    <h1 th:text="${auction.getSalesItem().getName()}"></h1>
-                </div>
-                <div class="row">
-                    <p th:text="${auction.getSalesItem().getDescription()}"></p>
-                </div>
+            <div class="row">
 
+            </div></div>
+        <div class="col-5">
+            <div class="row">
+                <h1 id="auction-details-name" th:text="${auction.getSalesItem().getName()}"></h1>
+                <h2 th:text=" '(ID:' + ${auction.id} + ')'"></h2>
+                <div th:if="${auction.isClosable()} == true">
+                    <a class="btn btn-outline-success my-2 my-sm-0" th:href="'Close?auction=' + ${auction.getId()}"> Close Auction</a>
+                </div>
+                <div th:if="${auction.isClosed()} == true">
+                    <h3>(AUCTION CLOSED)</h3>
+                </div>
+            </div>
+
+            <div class="row">
+                <h4 id="auction-details-remaining-time" th:text= "${auction.calculateExpiringTime()}" ></h4>
+            </div>
+            <div class="row">
+                <p id="auction-details-description" th:text="${auction.getSalesItem().getDescription()}"></p>
+            </div>
+            <div class="row">
+                <div th:if="${auction.isClosed()} == true">
+                    <p>AUCTION CLOSED</p>
+                    <div class="row" >
+                        <h6>Shipping address: </h6><p th:text= " ' ' +${auction.getAddress().getAddress()} + ' ' + ${auction.getAddress().getCity()} + ', ' + ${auction.getAddress().getCap()} + ' - ' + ${auction.getAddress().getCountry()} "></p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="row">
+                <h6>Expiring Date: </h6><p th:text="${auction.getExpiringDate()}"></p>
+            </div>
+            <div class="row">
                 <div class="row">
-                    <h6 class="text-warning" th:text= "${auction.calculateExpiringTime()}"></h6>
+                    <div class="col"><h6>Start Price:</h6></div>
+                    <div class="col"><p th:text="${' '+auction.initialPrice} + ' $'"></p></div>
+                </div>
+                <div class="row">
+                    <div class="col"><h6>Minimum Offer:</h6></div>
+                    <div class="col"><p th:text="${' '+auction.minimumOffer} + ' $'"></p></div>
+                </div>
+            </div>
+            <div th:if="${auction.isOpen()} == true" class="row">
+                <form action="NewOffer" method="POST" class="form-inline my-2 my-lg-0">
+                    <div class="input-group mb-3">
+                        <input name="offer" type="number"class="form-control"  id="inputNumber" placeholder="Make an offer" >
+                        <input type="hidden" id="custId" name="auctionid" th:value="${auction.id}">
+                        <button  class="btn btn-outline-success my-2 my-sm-0" type="submit" >Send</button>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <div id="auction-details-max-offert" class="card text-white bg-dark mb-3">
+                    <div class="card-body text-center" >
+                        <h1 id="" style="color: rgb(165, 42, 42);">MAX OFFERT: </h1><h3 id="max-offer-name" th:text="${auction.getMaxOffer().getuserName()}"></h3>
+                        <h6 id="max-offer-offert" th:text="'Offert: ' + ${auction.getMaxOffer().getOffer()} + '$'"></h6><h6 id="max-offer-date" th:text="${auction.getMaxOffer().getDate()}"></h6>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div id="auction-details-all-offerts" style="width: 90%;">
+                    <div class="card bg-light mb-3" style="width: 80%;" th:each="offert : ${offerts}">
+                        <div class="card-body text-center" style="margin-right: 10%;">
+                            <h2 id="offer-name-0" th:text="${offert.getuserName()}"></h2>
+                            <h6 id="a" class="d-inline" >Offert: </h6><p id="offer-offert-0" class="d-inline" th:text="${offert.getOffer()} + '$'"></p><h6 id="offer-date-0" th:text="${offert.getDate()}"></h6>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="col d-flex justify-content-center">
-        <h1>Users Offerts:</h1>
-        <table class="table ">
-            <thead>
-            </thead>
-            <tbody>
-                <tr th:each="o : ${offerts}">
-                    <td th:text="${o.getuserName()}"></td>
-                    <td th:text="${o.getOffer()}"></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
 </div>
 
 <div th:replace="/WEB-INF/TemplateHTML/errorTemplate :: errorTemplate"> </div>

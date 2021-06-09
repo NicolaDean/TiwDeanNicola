@@ -45,12 +45,13 @@ function OfferManager(containerId)
         this.container.appendChild(card);
     }
 
-    this.parseJsonOffer= function ()
+    this.parseJsonOffer= function (offerts)
     {
         var self = this;
 
         var i = 0;
-        this.data.forEach(function (offer){
+        console.log(offerts);
+        offerts.forEach(function (offer){
             self.printOffer(offer,i);
             i++;
         });
@@ -66,29 +67,10 @@ function OfferManager(containerId)
             a.innerHTML = "";
         }
     }
-    this.getOfferts = function (id)
+    this.getOfferts = function (offerts)
     {
         this.container.style.width     = "90%";
 
-        var self = this;
-        makeCall("GET",("./Details?auction="+id),null,function(req) {
-            if (req.readyState === XMLHttpRequest.DONE) {
-                var message = req.responseText;
-                switch (req.status) {
-                    case 200:
-                        console.log(message);
-                        self.data= JSON.parse(message);
-                        self.parseJsonOffer();
-                        break;
-                    case 400: // bad request
-                        setText(self.errorMsg,message + "error 400");
-                        break;
-                    case 401: // unauthorized
-                        setText(self.errorMsg,message + "error 401");
-                        break;
-                    case 500: // server error
-                        setText(self.errorMsg,message + "error 500");
-                        break;
-                }}});
+        this.parseJsonOffer(offerts);
     }
 }

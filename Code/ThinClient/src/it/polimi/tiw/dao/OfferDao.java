@@ -2,10 +2,10 @@ package it.polimi.tiw.dao;
 
 import it.polimi.tiw.models.Offer;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,7 +38,7 @@ public class OfferDao {
                 Offer o = new Offer(
                         resultSet.getString("name"),
                         resultSet.getInt("offer"),
-                        resultSet.getDate("offerDate")
+                        resultSet.getTimestamp("offerDate")
                 );
                 offerts.add(o);
 
@@ -52,7 +52,7 @@ public class OfferDao {
     }
     public List<Offer> getOffertById(int auctionId)
     {
-        String query = "select * from offertsData where auctionsid = ?";
+        String query = "select * from offertsData where auctionsid = ? order by offerDate desc ";
 
         return offertSelect(auctionId,query);
     }
@@ -68,7 +68,7 @@ public class OfferDao {
     public void insertOffer(int userId,int auctionid,int offer) throws Exception {
         String query = "insert into offerts (userid,auctionsid,offer,offerDate) values (?,?,?,?)";
 
-        Date today = new Date();
+        Timestamp timestamp = new java.sql.Timestamp((new Date()).getTime());
 
         Offer maxOffer = getMaxOffert(auctionid);
         //Controll valid offer
@@ -78,7 +78,7 @@ public class OfferDao {
         statement.setInt(1,userId);
         statement.setInt(2,auctionid);
         statement.setInt(3,offer);
-        statement.setDate(4,new java.sql.Date(today.getTime()));
+        statement.setTimestamp(4,timestamp);
 
         statement.executeUpdate();
 

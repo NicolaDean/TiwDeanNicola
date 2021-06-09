@@ -62,6 +62,10 @@ function AuctionManager(auctionDiv,auctionDetails) {
         row.appendChild(col);
     }
 
+    this.printMakeOffer = function (id)
+    {
+
+    }
     /**
      * Add button with event handler to open auction details
      * @param auction

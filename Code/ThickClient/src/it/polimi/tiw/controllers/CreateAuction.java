@@ -3,6 +3,7 @@ package it.polimi.tiw.controllers;
 import it.polimi.tiw.controllers.template.BasicServerlet;
 import it.polimi.tiw.dao.AuctionDao;
 import it.polimi.tiw.models.User;
+import org.apache.commons.lang.StringEscapeUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -31,6 +33,7 @@ public class CreateAuction  extends BasicServerlet {
         HttpSession session = request.getSession();
         User user= (User) session.getAttribute("currentUser");
 
+
         //Check if session is valid
         if(user == null)
         {
@@ -44,15 +47,15 @@ public class CreateAuction  extends BasicServerlet {
         AuctionDao auctionDao = new AuctionDao(this.getConnection());
 
 
-
-        int initialOffer  = Integer.parseInt(request.getParameter("initialOffer"));
-        int minimumOffer  = Integer.parseInt(request.getParameter("minimumOffer"));
-
+        String name         = StringEscapeUtils.escapeJava(request.getParameter("name"));
+        String description  = StringEscapeUtils.escapeJava(request.getParameter("description"));
+        int    initialOffer = Integer.parseInt(StringEscapeUtils.escapeJava(request.getParameter("initialOffer")));
+        int    minimumOffer = Integer.parseInt(StringEscapeUtils.escapeJava(request.getParameter("minimumOffer")));
 
         //TRY TO PARS DATA
         Date expiringData = null;
 
-        String rawData = request.getParameter("expiringDate");
+        String rawData = StringEscapeUtils.escapeJava(request.getParameter("expiringDate"));
         DateFormat formattedData = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
         try {
             expiringData =  formattedData.parse(rawData);
@@ -75,7 +78,7 @@ public class CreateAuction  extends BasicServerlet {
                                             request.getParameter("name"),
                                             request.getParameter("description"),
                                             imgFormat,
-                                            expiringData,
+                                            new Timestamp(expiringData.getTime()),
                                             initialOffer,
                                             minimumOffer
         );
@@ -94,7 +97,6 @@ public class CreateAuction  extends BasicServerlet {
             Files.copy(input, file.toPath());
         }
 
-        response.sendRedirect(getServletContext().getContextPath() + "/home");
 
     }
 }

@@ -26,8 +26,6 @@ public class CheckLoginData extends BasicServerlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-
-
         String email = StringEscapeUtils.escapeJava(request.getParameter("email"));
         String psw   = StringEscapeUtils.escapeJava(request.getParameter("password"));
 
@@ -50,6 +48,8 @@ public class CheckLoginData extends BasicServerlet {
         }
         else
         {
+            HttpSession session = request.getSession();
+            session.setAttribute("currentUser", usr);
             this.sendJson(usr,response);
         }
     }

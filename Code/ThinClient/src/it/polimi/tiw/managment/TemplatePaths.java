@@ -2,13 +2,16 @@ package it.polimi.tiw.managment;
 
 public class TemplatePaths {
 
-    public static String errorPath = "";
-    public static String loginPage = "index";
-    public static String homePage       = "/WEB-INF/TemplateHTML/home";
-    public static String header         = "/WEB-INF/TemplateHTML/header";
-    public static String footer         = "/WEB-INF/TemplateHTML/footer";
-    public static String auctionList    = "/WEB-INF/TemplateHTML/auctions";
-    public static String auctionCreate  = "/WEB-INF/TemplateHTML/auctionCreation";
-    public static String auctionDetails  = "/WEB-INF/TemplateHTML/auctionDetails";
+    public static String root           = "/WEB-INF/TemplateHTML/";
+
+    //Login
+    public static String loginPage      = "index";
+
+    //TEMPLATES
+    public static String homePage       = root +"home";
+    public static String auctionList    = root + "auctions";
+    public static String auctionCreate  = root + "auctionCreation";
+    public static String auctionDetails = root + "auctionDetails";
+    public static String sellerPage     = root + "sellerPage";
 
 }

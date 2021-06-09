@@ -54,11 +54,8 @@
              </div>
          </td>
          <td>
-            <p>Expiring Date: </p><p th:text="${#dates.day(a.getExpiringDate()) + ', '+
-                                                #dates.monthName(a.getExpiringDate()) + ' '+
-                                                #dates.year(a.getExpiringDate()) + ' alle '+
-                                                #dates.format(a.getExpiringDate(), 'HH:mm')
-                                                }"></p>
+             <p>Expiring Date: </p><p th:text="${a.getExpiringDate()}"></p>
+
              <form action="NewOffer" method="POST" class="form-inline my-2 my-lg-0">
                  <div class="input-group mb-3">
                      <input name="offer" type="number"class="form-control"  id="inputNumber" placeholder="Make an offer" >

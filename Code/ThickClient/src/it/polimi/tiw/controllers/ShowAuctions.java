@@ -34,8 +34,11 @@ public class ShowAuctions extends BasicServerlet {
         }
 
 
+
         if(!auctions.isEmpty())
         {
+            System.out.println("Return Auctions");
+
             this.sendJson(auctions,response);
         }
         else

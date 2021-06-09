@@ -31,6 +31,7 @@ public class GetUserProfileData extends BasicServerlet {
         try {
             open   = auctionDao.getOpenAuctions(input);
             closed = auctionDao.getClosedAuctions(input);
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
