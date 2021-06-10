@@ -1,5 +1,6 @@
 package it.polimi.tiw.controllers.template;
 
+import it.polimi.tiw.managment.CurrentContext;
 import it.polimi.tiw.managment.JsonSerializable;
 import it.polimi.tiw.managment.dbConnection;
 
@@ -33,6 +34,9 @@ public class BasicServerlet extends HttpServlet {
 
         //Generate Context
         ServletContext context = getServletContext();
+
+        CurrentContext.setContext(context);//Set context into Singleton Class "CurrentContext"
+
         //Try to connect to database and in case of error forward error Page
         try {
             this.connection = dbConnection.getConnection(context);

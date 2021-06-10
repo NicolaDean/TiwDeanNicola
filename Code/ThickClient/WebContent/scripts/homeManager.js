@@ -56,10 +56,10 @@
             var showCreate    = document.getElementById("create-auction-show-button");
 
 
-            this.details        = new AuctionDetails();
-            this.userProfile    = new UserPage(this.details);
-            this.auction        = new AuctionManager(auctionDiv,this.details);
-            this.creation       = new AuctionCreation();
+            this.details        = new AuctionDetails(errorMsg);
+            this.userProfile    = new UserPage(this.details,errorMsg);
+            this.auction        = new AuctionManager(auctionDiv,this.details,errorMsg);
+            this.creation       = new AuctionCreation(this.details,errorMsg);
 
             this.creation       .initialize();
             this.userProfile    .setId(userId);

@@ -18,8 +18,8 @@
 <div class="col d-flex justify-content-center">
     <h3>Here you can create a new auction</h3>
 </div>
+<div th:replace="/WEB-INF/TemplateHTML/errorTemplate :: errorTemplate"> </div>
 <div class="col d-flex justify-content-center">
-
     <div  style="width:700px" >
         <form action="CreateAuction" method="post" enctype="multipart/form-data">
             <input name="file"  type="file" accept=".png,.jpg,.jpeg,.webp">

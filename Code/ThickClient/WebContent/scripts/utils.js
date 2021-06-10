@@ -118,7 +118,9 @@ function getParagraph(id,text="")
 
 function setContent(id,text)
 {
+
     var elem = document.getElementById(id);
+    setVisible(elem);
     elem.innerText = text;
 }
 

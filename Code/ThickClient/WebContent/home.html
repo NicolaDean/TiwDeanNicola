@@ -45,7 +45,11 @@
         <h1>Benvenutoo,<span id = "welcome-nickname"></span></h1>
     </div>
 
-<p id = "error-msg">Error Msg</p>
+
+    <div id = "error-msg" class="alert alert-danger">
+        ErrorMsg
+    </div>
+
 <!-- here will appear auctions list-->
     <div class="mt-3" id="auctions-div">
         <div class="col d-flex justify-content-center">
@@ -80,16 +84,19 @@
             <div class="row">
                 <h1 id="auction-details-name">Gatto</h1>
                 <h2 id="auction-details-id">(ID:4)</h2>
+                <a href="#" id="close-auction-button">Close Auction</a>
+                <h6 id = "auction-closed-message">Auction closed</h6>
+
             </div>
 
             <div class="row">
-                <h4 id="auction-details-remaining-time">15 days 1 hours 57 min left</h4>
+                <h4 id="auction-details-remaining-time" class="text-warning">15 days 1 hours 57 min left</h4>
             </div>
             <div class="row">
                 <p id="auction-details-description">ciao sono un gatto </p>
             </div>
             <div class="row">
-
+                <h6 id = "shipping-address">Auction closed</h6>
             </div>
             <div class="row">
 
@@ -132,7 +139,8 @@
     </div>
 </div>
 <!-- here will appear the user profile-->
-    <div class="card-columns" id="user-profile" style="width: 75%;margin-left: 10%;">
+<div id="user-profile">
+    <div class="card-columns"  style="width: 75%;margin-left: 10%;">
         <div class="card mr-3 ml-3 mt-3" >
             <h5 class="card-title text-center mt-2">Open auctions</h5>
             <div id="open-owned-auctions">
@@ -151,7 +159,16 @@
             </h5>
         </div>
     </div>
+    <div class="col justify-content-center">
+        <h1>WINNED AUCTIONS</h1>
+        <div class="card mr-3 ml-3 mt-3">
+            <h5 class="card-title text-center mt-2">Those list contains all the auctions you win!!!</h5>
+            <div id="winned-auctions">
 
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 <div  class="col d-flex justify-content-center">
     <div  style="width:700px" >

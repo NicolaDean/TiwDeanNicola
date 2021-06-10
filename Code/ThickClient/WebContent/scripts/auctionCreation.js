@@ -1,8 +1,10 @@
 
-function AuctionCreation()
+function AuctionCreation(errorMsg,details)
 {
     this.formContainer = document.getElementById("auction-creation-form");
     this.formButton    = document.getElementById("auction-creation-button");
+    this.errorMsg       = document.getElementById("error-msg");
+    this.details       = details;
 
     this.initialize = function ()
     {
@@ -27,22 +29,22 @@ function AuctionCreation()
 
     this.sendAuctionCreation = function (form)
     {
+        var self = this;
         makeCall("POST","CreateAuction",form,
             function(req) {
             if (req.readyState === XMLHttpRequest.DONE) {
                 var message = req.responseText;
                 switch (req.status) {
                     case 200:
-                        console.log(message);
                         break;
                     case 400: // bad request
-                        setText(errorMsg,message + "error 400");
+                        setText(self.errorMsg,message + "error 400");
                         break;
                     case 401: // unauthorized
-                        setText(errorMsg,message + "error 401");
+                        setText(self.errorMsg,message + "error 401");
                         break;
                     case 500: // server error
-                        setText(errorMsg,message + "error 500");
+                        setText(self.errorMsg,message + "error 500");
                         break;
                 }
             }

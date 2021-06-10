@@ -1,5 +1,6 @@
 package it.polimi.tiw.dao;
 
+import it.polimi.tiw.exceptions.CustomExeption;
 import it.polimi.tiw.models.Offer;
 
 import java.sql.*;
@@ -49,7 +50,7 @@ public class OfferDao {
     }
     public List<Offer> getOffertById(int auctionId)
     {
-        String query = "select * from offertsData where auctionsid = ?";
+        String query = "select * from offertsData where auctionsid = ? order by offerDate desc";
 
         return offertSelect(auctionId,query);
     }
@@ -62,14 +63,20 @@ public class OfferDao {
         return out.get(0);
     }
 
-    public void insertOffer(int userId,int auctionid,int offer) throws Exception {
+    public void insertOffer(int userId,int auctionid,int offer) throws CustomExeption, SQLException {
         String query = "insert into offerts (userid,auctionsid,offer,offerDate) values (?,?,?,?)";
-
         Date today = new Date();
-
         Offer maxOffer = getMaxOffert(auctionid);
+
+        AuctionDao auctionDao = new AuctionDao(this.connection);
+
+        int minOffer  = auctionDao.getAuctionById(auctionid).getMinimumOffer();
+
         //Controll valid offer
-        if(maxOffer != null &&  maxOffer.getOffer() >= offer) throw  new Exception("Offer to low");
+        if(maxOffer != null &&  maxOffer.getOffer()  > offer)
+            throw  new CustomExeption("Offer lower then maxOffer : " + maxOffer.getOffer() + " $");
+        else if(maxOffer != null &&  maxOffer.getOffer()+ minOffer  > offer)
+            throw  new CustomExeption("You need to offer at least" + minOffer + "$ more than "+ maxOffer.getOffer() + " $");
 
         PreparedStatement statement = this.connection.prepareStatement(query);
         statement.setInt(1,userId);

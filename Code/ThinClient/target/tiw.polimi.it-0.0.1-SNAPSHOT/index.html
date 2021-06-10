@@ -15,9 +15,9 @@
         <p>Un esperienza unica piena di oggetti curiosi e stravaganti, rifatti gli occhi</p>
     </div>
 
-    <div class="col d-flex justify-content-center">
-        <div th:if="${errorMsg}" class="alert alert-warning" style="width:400px">
-            <p th:text="${''+ errorMsg}"></p>
+    <div>
+        <div th:if="${errorMsg}" class="alert alert-warning" >
+            <h6 th:text="${''+ errorMsg}"></h6>
         </div>
     </div>
     <div class="col d-flex justify-content-center">

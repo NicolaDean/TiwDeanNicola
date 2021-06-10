@@ -1,5 +1,6 @@
 package it.polimi.tiw.dao;
 
+import it.polimi.tiw.exceptions.CustomExeption;
 import it.polimi.tiw.models.*;
 
 import java.sql.*;
@@ -16,8 +17,7 @@ public class AuctionDao {
         this.connection = connection;
     }
 
-    public int createAution(int userid, String name, String description, String fileFormat, Timestamp expiringDate, int initialOffer, int minimumOffer)
-    {
+    public int createAution(int userid, String name, String description, String fileFormat, Timestamp expiringDate, int initialOffer, int minimumOffer) throws SQLException, CustomExeption {
         SalesItemDao salesItemDao = new SalesItemDao(this.connection);
         PreparedStatement queryParameters = null;
 
@@ -44,6 +44,7 @@ public class AuctionDao {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            throw new CustomExeption("Auction Creation Failed Due to database errors");
         }
 
 
@@ -121,14 +122,17 @@ public class AuctionDao {
         return auctions;
     }
 
-    public void setAuctionClosed(int id) throws SQLException {
+    public void setAuctionClosed(int id) throws SQLException, CustomExeption {
         if(getAuctionById(id).isClosable())
         {
+            Date today = new Date();
+
             String query = "update auctions set closed = true  where (id=?)";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1,id);
 
             statement.executeUpdate();
+
         }
 
     }

@@ -27,15 +27,16 @@ public class GetUserProfileData extends BasicServerlet {
 
         List<Auction> open   = new ArrayList<>();
         List<Auction> closed = new ArrayList<>();
-
+        List<Auction> winned = new ArrayList<>();
         try {
             open   = auctionDao.getOpenAuctions(input);
             closed = auctionDao.getClosedAuctions(input);
+            winned = auctionDao.getWinnedAuctions(input);
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        UserProfileData data = new UserProfileData(open,closed);
+        UserProfileData data = new UserProfileData(open,closed,winned);
 
         if(!(open.isEmpty() && closed.isEmpty()))
         {
@@ -43,7 +44,7 @@ public class GetUserProfileData extends BasicServerlet {
         }
         else
         {
-            this.respondError("you dont own auctions", response);
+            this.respondError("you dont own auctions click on create button to create your First :)", response);
         }
 
     }

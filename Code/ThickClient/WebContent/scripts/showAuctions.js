@@ -1,10 +1,10 @@
-function AuctionManager(auctionDiv,auctionDetails) {
+function AuctionManager(auctionDiv,auctionDetails,errorMsg) {
 
     this.detail     = auctionDetails;
     this.auctionDiv = auctionDiv;
-    this.table = document.getElementById("auctions-table");
-    this.data  = JSON.parse("{}");
-
+    this.table      = document.getElementById("auctions-table");
+    this.data       = JSON.parse("{}");
+    this.errorMsg       = document.getElementById("error-msg");
     this.setVisible = function() {
         setVisible(this.auctionDiv);
     }
@@ -71,41 +71,91 @@ function AuctionManager(auctionDiv,auctionDetails) {
      * @param auction
      * @param row
      */
-    this.printDetailButton = function (auction,row)
+    this.printDetailButton = function (auction,container)
     {
+
+        container.appendChild(getTitle(6,"","Expiring Date: "));
+        container.appendChild(getParagraph("",auction.date));
+
+        var button = getLinkTitle(6,"#","Auction Details");
+
         var self = this;
-        var col          = document.createElement("td");
-        var btn          = document.createElement("button");
-
-        btn.textContent  = "Auction Details"
-        btn.className    = "btn btn-outline-success";
-        btn.id           = "auction-detail-"+auction.id;
-
-        btn.addEventListener("click",e=>{
-
+        button.addEventListener("click",e=>{
             var auc = document.getElementById("auctions-div");
             setInvisible(auc);
             self.detail.setVisible();
             self.detail.show(auction);
         });
 
-        col.appendChild(btn);
-        row.appendChild(col);
+        container.appendChild(button);
+    }
+
+    this.printPrices = function (auction,container)
+    {
+
+        //Start PRICE
+        var r1 = getRow(0);
+        var c1 = getCol();
+        var c2 = getCol();
+
+        c1.appendChild(getTitle(6,"","Initial Price"));
+        c2.appendChild(getParagraph("",auction.initialPrice + "$"));
+        r1.appendChild(c1);
+        r1.appendChild(c2);
+
+        // MINIMUM OFFERT
+
+        var r2 = getRow(0);
+        c1 = getCol();
+        c2 = getCol();
+
+        c1.appendChild(getTitle(6,"","MinimumOffert"));
+        c2.appendChild(getParagraph("",auction.minimumOffer + "$"));
+        r2.appendChild(c1);
+        r2.appendChild(c2);
+
+        // Current Price
+
+        var r3 = getRow(0);
+        c1 = getCol();
+        c2 = getCol();
+
+        c1.appendChild(getTitle(6,"","Max Offert"));
+        c2.appendChild(getParagraph("",auction.maxOffer.offer + "$"));
+        r3.appendChild(c1);
+        r3.appendChild(c2);
+
+        container.appendChild(r1);
+        container.appendChild(r2);
+        container.appendChild(r3);
+
+
     }
     this.printAuction = function (auction)
     {
         var self = this;
-        console.log(auction);
 
         var row         = document.createElement("tr");
 
+        var col1        = document.createElement("td");
+        var col2        = document.createElement("td");
+        var col3        = document.createElement("td");
+        var col4        = document.createElement("td");
+
+
         row.id = "auction-" + auction.id;
 
-        printImg(auction.imgPath,row);
-        printItemData(auction.salesItem.name,auction.salesItem.description,auction.remainingTime,row);
-        this.printDetailButton(auction,row);
+        printImg(auction.imgPath,col1);
+        printItemData(auction.salesItem.name,auction.salesItem.description,auction.remainingTime,col2);
+        this.printPrices(auction,col3);
+        this.printDetailButton(auction,col4);
+
+        row.appendChild(col1);
+        row.appendChild(col2);
+        row.appendChild(col3);
+        row.appendChild(col4);
+
         this.table.appendChild(row);
-        //container.appendChild(row);
     }
     this.parseJsonAuctions = function (auctions)
     {
@@ -153,18 +203,17 @@ function AuctionManager(auctionDiv,auctionDetails) {
                 var message = req.responseText;
                 switch (req.status) {
                     case 200:
-                        console.log(message);
                         self.data= JSON.parse(message);
                         self.parseJsonAuctions(message,self.auctionDiv);
                         break;
                     case 400: // bad request
-                        setText(errorMsg,message + "error 400");
+                        setText(self.errorMsg,message + "error 400");
                         break;
                     case 401: // unauthorized
-                        setText(errorMsg,message + "error 401");
+                        setText(self.errorMsg,message + "error 401");
                         break;
                     case 500: // server error
-                        setText(errorMsg,message + "error 500");
+                        setText(self.errorMsg,message + "error 500");
                         break;
                 }}});
     }

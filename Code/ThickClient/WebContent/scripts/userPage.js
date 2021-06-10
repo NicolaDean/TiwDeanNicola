@@ -5,11 +5,14 @@ function UserPage(auctionDetails)
     this.container                  = document.getElementById("user-profile");
     this.openAuctions               = document.getElementById("open-owned-auctions");
     this.closedAuctions             = document.getElementById("closed-owned-auctions");
+    this.winnedAuctions             = document.getElementById("winned-auctions");
+
     this.errorMsg                   = document.getElementById("error-msg");
     this.openAuctionsData           = JSON.parse("{}");
     this.closedAuctionsData         = JSON.parse("{}");
+    this.winnedAuctionsData         = JSON.parse("{}");
     this.detail                     = auctionDetails;
-
+    this.errorMsg                   = document.getElementById("error-msg");
     console.log("Created user page");
     console.log(this.container);
     setInvisible(this.container);
@@ -27,8 +30,9 @@ function UserPage(auctionDetails)
     }
     this.reset = function()
     {
-        this.openAuctions.innerHTML = "";
+        this.openAuctions.innerHTML   = "";
         this.closedAuctions.innerHTML = "";
+        this.winnedAuctions.innerHTML = "";
     }
 
     this.setId = function (id)
@@ -36,17 +40,17 @@ function UserPage(auctionDetails)
         this.id = id;
     }
 
-    this.printAuction = function (container,auction)
+    this.printAuction = function (container,auction,winned)
     {
         var col = getDiv("auction-col" );
         var r1  = getDiv("auction-row1");
         var r2  = getDiv("auction-row2");
-        var r3  = getDiv("auction-row2");
+        var r3  = getDiv("auction-row3");
 
         col.className = "col";
-        r1.className = "r1";
-        r2.className = "r2";
-        r3.className = "r3";
+        r1.className = "row";
+        r2.className = "row";
+        r3.className = "row";
 
         var name = getLinkTitle(5,"#",(auction.salesItem.name + "(ID:" +auction.id +")"));
 
@@ -67,10 +71,18 @@ function UserPage(auctionDetails)
         col.appendChild(r2);
         col.appendChild(r3);
 
+        if(winned)
+        {
+            var r4  = getDiv("auction-row4");
+            r4.className = "row";
+            r4.appendChild(getParagraph("","Shipping: " +auction.address.address + ", " + auction.address.cap + " - " + auction.address.city + " - "+ auction.address.country));
+            col.appendChild(r4);
+        }
+
         container.appendChild(col)
     }
 
-    this.printAuctions = function(container,auctions)
+    this.printAuctions = function(container,auctions,winned)
     {
         var self = this;
 
@@ -80,7 +92,7 @@ function UserPage(auctionDetails)
             var tr = document.createElement("tr");
             var td = document.createElement("td");
 
-            self.printAuction(td,auction);
+            self.printAuction(td,auction,winned);
             //td.innerText = auction.salesItem.name;
 
             tr.appendChild(td);
@@ -92,8 +104,9 @@ function UserPage(auctionDetails)
     this.parseUserData = function ()
     {
         //NOME CODICE MAX OFFER E TEMPO MANCANTE EXPIRING DATE
-        this.printAuctions(this.openAuctions,this.openAuctionsData);
-        this.printAuctions(this.closedAuctions,this.closedAuctionsData);
+        this.printAuctions(this.openAuctions  ,this.openAuctionsData,false);
+        this.printAuctions(this.closedAuctions,this.closedAuctionsData,false);
+        this.printAuctions(this.winnedAuctions,this.winnedAuctionsData,true)
     }
 
     this.assignData = function(json)
@@ -115,6 +128,7 @@ function UserPage(auctionDetails)
                     case 200:
                         self.openAuctionsData   = JSON.parse(message).open;
                         self.closedAuctionsData = JSON.parse(message).closed;
+                        self.winnedAuctionsData = JSON.parse(message).winned;
                         self.parseUserData();
                         break;
                     case 400: // bad request

@@ -2,6 +2,7 @@ package it.polimi.tiw.controllers;
 
 import it.polimi.tiw.controllers.template.BasicServerlet;
 import it.polimi.tiw.dao.OfferDao;
+import it.polimi.tiw.exceptions.CustomExeption;
 import it.polimi.tiw.models.User;
 import org.apache.commons.lang.StringEscapeUtils;
 
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
+
 @MultipartConfig
 @WebServlet(name = "CreateOffer", value = "/NewOffer")
 public class CreateOffer extends BasicServerlet {
@@ -30,9 +33,13 @@ public class CreateOffer extends BasicServerlet {
         int offer =Integer.parseInt(in2);
 
         try {
-            offerDao.insertOffer(u.getId(),auctionid,offer);
-        } catch (Exception e) {
-            e.printStackTrace();
+            offerDao.insertOffer(u.getId(), auctionid, offer);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (CustomExeption customExeption) {
+            //Generate message to send to the user
+            customExeption.printStackTrace();
+            customExeption.SendError(response);
         }
     }
 }

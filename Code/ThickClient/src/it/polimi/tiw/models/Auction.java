@@ -19,6 +19,7 @@ public class Auction extends JsonSerializable {
     private Offer       maxOffer;
     private Address     address;
     private Boolean     closed;
+    private Boolean     closable;
     private String      imgPath;
     private String      remainingTime;
     private String      date;
@@ -35,8 +36,9 @@ public class Auction extends JsonSerializable {
         this.maxOffer     = maxOffer;
         this.address      = address;
         this.closed       = closed;
-        this.imgPath        = this.getImagePath(this.salesItem.getFileFormat());
-        this.remainingTime  = this.calculateExpiringTime();
+        this.imgPath      = this.getImagePath(this.salesItem.getFileFormat());
+        this.remainingTime= this.calculateExpiringTime();
+        this.closable     = isClosable();
 
         DateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy HH:mm");
 
@@ -47,6 +49,10 @@ public class Auction extends JsonSerializable {
 
     }
 
+    public int getUserId()
+    {
+        return this.userId;
+    }
     public void setOfferts(List<Offer> offerts)
     {
         this.offerts = offerts;

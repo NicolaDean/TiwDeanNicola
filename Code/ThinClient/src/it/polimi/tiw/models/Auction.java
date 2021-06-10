@@ -31,6 +31,10 @@ public class Auction {
         this.closed       = closed;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
     public int getId() {
         return this.id;
     }
