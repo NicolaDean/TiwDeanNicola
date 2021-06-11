@@ -104,7 +104,8 @@ public class AuctionDao {
                                 queryResult.getBoolean("closed")
                         );
 
-                auctions.add(auction);
+                if(auction.getSalesItem()!= null)
+                    auctions.add(auction);
 
             }
         }

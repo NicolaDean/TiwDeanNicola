@@ -1,10 +1,29 @@
 function AuctionManager(auctionDiv,auctionDetails,errorMsg) {
 
-    this.detail     = auctionDetails;
-    this.auctionDiv = auctionDiv;
-    this.table      = document.getElementById("auctions-table");
-    this.data       = JSON.parse("{}");
-    this.errorMsg       = document.getElementById("error-msg");
+    this.detail           = auctionDetails;
+
+    this.auctionDiv       = auctionDiv;
+    this.suggestionButton = document.getElementById("suggested-button");
+    this.showNewButton    = document.getElementById("new-button");
+    this.table            = document.getElementById("auctions-table");
+    this.data             = JSON.parse("{}");
+    this.errorMsg         = document.getElementById("error-msg");
+    this.showType         = document.getElementById("show-type");
+
+    this.suggestionButton.addEventListener("click",e=>{
+        var suggestions = getCookie("suggestions");
+
+        if(!(suggestions===null))
+            this.getSuggestions(suggestions);
+        else {
+            alert("No Suggestions available");
+        }
+    });
+
+    this.showNewButton.addEventListener("click",e=>{
+        this.getAuctions();
+    });
+
     this.setVisible = function() {
         setVisible(this.auctionDiv);
     }
@@ -81,6 +100,7 @@ function AuctionManager(auctionDiv,auctionDetails,errorMsg) {
 
         var self = this;
         button.addEventListener("click",e=>{
+
             var auc = document.getElementById("auctions-div");
             setInvisible(auc);
             self.detail.setVisible();
@@ -179,9 +199,10 @@ function AuctionManager(auctionDiv,auctionDetails,errorMsg) {
         var self = this;
 
         self.data.forEach(function (auction) {
-            var name =  auction.salesItem.name;
-            var desc =  auction.salesItem.description;
+            var name =  auction.salesItem.name.toLowerCase();
+            var desc =  auction.salesItem.description.toLowerCase();
 
+            filter = filter.toLowerCase();
             var selectedRow = document.getElementById("auction-" + auction.id);
             if(!(name.includes(filter) || desc.includes(filter)))
             {
@@ -193,8 +214,30 @@ function AuctionManager(auctionDiv,auctionDetails,errorMsg) {
             }
         });
     }
-    this.fillAuctions = function (errorMsg)
+
+    this.fillAuctions = function ()
     {
+        //TRUE  = NEW AUCTIONS
+        //FALSE = SUGGESTION WITH COOKIE
+
+        setCookie("lastAction","buy",30);
+
+        var suggestions = getCookie("suggestions");
+
+        if(!(suggestions===null))
+        {
+            this.getSuggestions(suggestions);
+        }
+        else
+        {
+            this.getAuctions();
+        }
+
+    }
+
+    this.getAuctions = function ()
+    {
+        this.showType.innerText = "Auctions";
         var self = this;
         self.reset();
         self.setVisible();
@@ -207,14 +250,40 @@ function AuctionManager(auctionDiv,auctionDetails,errorMsg) {
                         self.parseJsonAuctions(message,self.auctionDiv);
                         break;
                     case 400: // bad request
-                        setText(self.errorMsg,message + "error 400");
+                        setText(self.errorMsg,message + "");
                         break;
                     case 401: // unauthorized
-                        setText(self.errorMsg,message + "error 401");
+                        setText(self.errorMsg,message + " Unautorized action");
                         break;
                     case 500: // server error
-                        setText(self.errorMsg,message + "error 500");
+                        setText(self.errorMsg,message + " Server error");
                         break;
                 }}});
+    }
+
+    this.getSuggestions = function (suggestions)
+    {
+        this.showType.innerText = "Suggestions";
+        var self = this;
+        self.reset();
+        self.setVisible();
+        makeCall("POST","Suggestions",null,function(req) {
+            if (req.readyState === XMLHttpRequest.DONE) {
+                var message = req.responseText;
+                switch (req.status) {
+                    case 200:
+                        self.data= JSON.parse(message);
+                        self.parseJsonAuctions(message,self.auctionDiv);
+                        break;
+                    case 400: // bad request
+                        setText(self.errorMsg,message + "");
+                        break;
+                    case 401: // unauthorized
+                        setText(self.errorMsg,message + " Unautorized action");
+                        break;
+                    case 500: // server error
+                        setText(self.errorMsg,message + " Server error");
+                        break;
+                }}},suggestions);
     }
 }

@@ -3,7 +3,6 @@
     {
         window.addEventListener("load", () => {
             checkLogin();
-
             var username = printWelcomeMessage();
             var page = new loadPage(username);
 
@@ -69,6 +68,19 @@
             this.userProfile    .setInvisible();
             this.creation       .setInvisible();
             setInvisible(errorMsg);
+
+            var lastAction = getCookie("lastAction");
+
+            if(lastAction === "create")
+            {
+                hideWelcomeMessage()
+                this.userProfile.setVisible();
+            }
+            else if(lastAction === "buy")
+            {
+                hideWelcomeMessage()
+                this.auction.fillAuctions(errorMsg);
+            }
 
             userLogged.innerText = "Logged as: " + username;
 

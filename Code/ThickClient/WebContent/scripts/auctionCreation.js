@@ -29,22 +29,27 @@ function AuctionCreation(errorMsg,details)
 
     this.sendAuctionCreation = function (form)
     {
+
         var self = this;
+        setInvisible(self.errorMsg);
         makeCall("POST","CreateAuction",form,
             function(req) {
             if (req.readyState === XMLHttpRequest.DONE) {
                 var message = req.responseText;
                 switch (req.status) {
                     case 200:
+                        setCookie("lastAction","create",30);
+                        form.reset();
+                        alert("Auction created :)");
                         break;
                     case 400: // bad request
-                        setText(self.errorMsg,message + "error 400");
+                        setText(self.errorMsg,message + "");
                         break;
                     case 401: // unauthorized
-                        setText(self.errorMsg,message + "error 401");
+                        setText(self.errorMsg,message + " Unautorized action");
                         break;
                     case 500: // server error
-                        setText(self.errorMsg,message + "error 500");
+                        setText(self.errorMsg,message + " Server error");
                         break;
                 }
             }

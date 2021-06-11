@@ -15,6 +15,7 @@
         });
 
         function validateLogin(form){
+            var self = this;
             makeCall("POST","Login",form,
                 function(req) {
                     if (req.readyState === XMLHttpRequest.DONE) {
@@ -26,13 +27,13 @@
                                 window.location.href = "home.html";
                                 break;
                             case 400: // bad request
-                                setText(errorMsg,message + "error 400");
+                                setText(self.errorMsg,message + "error 400");
                                 break;
                             case 401: // unauthorized
-                                setText(errorMsg,message + "error 401");
+                                setText(self.errorMsg,message + " Unautorized action");
                                 break;
                             case 500: // server error
-                                setText(errorMsg,message + "error 500");
+                                setText(self.errorMsg,message + " Server error");
                                 break;
                         }
                     }

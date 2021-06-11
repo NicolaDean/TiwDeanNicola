@@ -49,6 +49,11 @@ public class Auction extends JsonSerializable {
 
     }
 
+    public Date getDate()
+    {
+        return expiringDate;
+    }
+
     public int getUserId()
     {
         return this.userId;

@@ -13,6 +13,7 @@ function UserPage(auctionDetails)
     this.winnedAuctionsData         = JSON.parse("{}");
     this.detail                     = auctionDetails;
     this.errorMsg                   = document.getElementById("error-msg");
+
     console.log("Created user page");
     console.log(this.container);
     setInvisible(this.container);
@@ -132,13 +133,13 @@ function UserPage(auctionDetails)
                         self.parseUserData();
                         break;
                     case 400: // bad request
-                        setText(self.errorMsg,message + "error 400");
+                        setText(self.errorMsg,message + "");
                         break;
                     case 401: // unauthorized
-                        setText(self.errorMsg,message + "error 401");
+                        setText(self.errorMsg,message + " Unautorized action");
                         break;
                     case 500: // server error
-                        setText(self.errorMsg,message + "error 500");
+                        setText(self.errorMsg,message + " Server error");
                         break;
                 }}});
     }

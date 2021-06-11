@@ -1,6 +1,7 @@
 package it.polimi.tiw.dao;
 
 import it.polimi.tiw.exceptions.CustomExeption;
+import it.polimi.tiw.models.Auction;
 import it.polimi.tiw.models.Offer;
 
 import java.sql.*;
@@ -75,13 +76,15 @@ public class OfferDao {
         //Controll valid offer
         AuctionDao auctionDao = new AuctionDao(this.connection);
 
-        int minOffer  = auctionDao.getAuctionById(auctionid).getMinimumOffer();
+        Auction tmp = auctionDao.getAuctionById(auctionid);
 
+        if(tmp.isClosable())
+            throw new CustomExeption("You cant do offert to closed auctions, this expired "+tmp.getExpiringDate());
         //Controll valid offer
         if(maxOffer != null &&  maxOffer.getOffer()  > offer)
             throw  new CustomExeption("Offer lower then maxOffer : " + maxOffer.getOffer() + " $");
-        else if(maxOffer != null &&  maxOffer.getOffer()+ minOffer  > offer)
-            throw  new CustomExeption("You need to offer at least" + minOffer + "$ more than "+ maxOffer.getOffer() + " $");
+        else if(maxOffer != null &&  maxOffer.getOffer()+ tmp.getMinimumOffer()  > offer)
+            throw  new CustomExeption("You need to offer at least" + tmp.getMinimumOffer() + "$ more than "+ maxOffer.getOffer() + " $");
 
 
         PreparedStatement statement = this.connection.prepareStatement(query);
