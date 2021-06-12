@@ -51,13 +51,13 @@ public class OfferDao {
     }
     public List<Offer> getOffertById(int auctionId)
     {
-        String query = "select * from offertsData where auctionsid = ? order by offerDate desc";
+        String query = "select name,offer,offerDate from offertsData where auctionsid = ? order by offerDate desc";
 
         return offertSelect(auctionId,query);
     }
 
     public Offer getMaxOffert(int auctionId) {
-        String query = "select * from maxOfferData where auctionsid = ?";
+        String query = "select name,offer,offerDate from maxOfferData where auctionsid = ?";
 
         List<Offer> out = offertSelect(auctionId, query);
         if(out.isEmpty()) return null;

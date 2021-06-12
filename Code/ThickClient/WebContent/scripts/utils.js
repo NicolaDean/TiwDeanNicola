@@ -179,10 +179,3 @@ function getCookie(cname) {
     return out;
 }
 
-function sendJson(url,content)
-{
-    var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
-    xmlhttp.open("POST", url);
-    xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    xmlhttp.send(content);
-}

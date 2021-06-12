@@ -159,8 +159,9 @@ function AuctionDetails(errorMsg)
                     var message = req.responseText;
                     switch (req.status) {
                         case 200:
-                            console.log();
-                            self.retriveData(self.id);
+                            console.log(message);
+                            self.detailsJson = JSON.parse(message);
+                            self.printData(JSON.parse(message));
                             alert("Offert created :)");
                             break;
                         case 400: // bad request

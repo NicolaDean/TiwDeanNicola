@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "ShowUserClosedAuction", value = "/UserProfile")
+@WebServlet(name = "GetUserProfileData", value = "/UserProfile")
 public class GetUserProfileData extends BasicServerlet {
     //TODO CHECK LOGIN BEFORE SEND DATA (per non inviare dati personali ad utenti sconosciuti)
     @Override

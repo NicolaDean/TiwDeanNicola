@@ -1,8 +1,10 @@
 package it.polimi.tiw.controllers;
 
 import it.polimi.tiw.controllers.template.BasicServerlet;
+import it.polimi.tiw.dao.AuctionDao;
 import it.polimi.tiw.dao.OfferDao;
 import it.polimi.tiw.exceptions.CustomExeption;
+import it.polimi.tiw.models.Auction;
 import it.polimi.tiw.models.User;
 import org.apache.commons.lang.StringEscapeUtils;
 
@@ -25,7 +27,9 @@ public class CreateOffer extends BasicServerlet {
         String in1         = StringEscapeUtils.escapeJava(request.getParameter("auctionid"));
         String in2         = StringEscapeUtils.escapeJava(request.getParameter("offer"));
 
-        OfferDao offerDao = new OfferDao(this.getConnection());
+        OfferDao   offerDao   = new OfferDao(this.getConnection());
+        AuctionDao auctionDao = new AuctionDao(this.getConnection());
+
         HttpSession session = request.getSession();
         User u = (User)session.getAttribute("currentUser");
         System.out.println(in1);
@@ -34,8 +38,14 @@ public class CreateOffer extends BasicServerlet {
 
         try {
             offerDao.insertOffer(u.getId(), auctionid, offer);
+
+            Auction auction = auctionDao.getAuctionById(auctionid);
+            auction.setOfferts(offerDao.getOffertById(auctionid));
+            this.sendJson(auction,response);
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            this.respondError("SQL error",response);
         } catch (CustomExeption customExeption) {
             //Generate message to send to the user
             customExeption.printStackTrace();

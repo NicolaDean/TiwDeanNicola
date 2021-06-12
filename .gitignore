@@ -1,3 +1,6 @@
 /Code/ThinClient/tiw.polimi.it.iml
 *.iml
 /Code/ThinClient/.idea/
+target
+*/target/
+
