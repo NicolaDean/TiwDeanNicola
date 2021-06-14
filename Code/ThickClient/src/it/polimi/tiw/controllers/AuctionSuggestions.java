@@ -59,7 +59,7 @@ public class AuctionSuggestions extends BasicServerlet {
         {
             try {
                 Auction a = auctionDao.getAuctionById(id);
-                if(!a.isClosed() && !a.isClosed())
+                if(!a.isClosed() && !a.isClosable())
                 {
                     auctions.add(a);
                 }

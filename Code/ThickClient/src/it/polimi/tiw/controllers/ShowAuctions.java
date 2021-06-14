@@ -2,8 +2,6 @@ package it.polimi.tiw.controllers;
 
 import it.polimi.tiw.controllers.template.BasicServerlet;
 import it.polimi.tiw.dao.AuctionDao;
-import it.polimi.tiw.managment.JsonSerializable;
-import it.polimi.tiw.managment.TemplatePaths;
 import it.polimi.tiw.models.Auction;
 
 import javax.servlet.ServletException;

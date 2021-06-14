@@ -51,6 +51,10 @@ public class Auction {
         return this.minimumOffer;
     }
 
+    public void setClosed()
+    {
+        this.closed = true;
+    }
     public String getExpiringDate() {
         DateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy HH:mm");
         return formatter.format(this.expiringDate);

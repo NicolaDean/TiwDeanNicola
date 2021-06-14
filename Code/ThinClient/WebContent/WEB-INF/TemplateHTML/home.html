@@ -55,6 +55,9 @@
                                 <div class="row" >
                                     <h6>Shipping address: </h6><p th:text= " ' ' +${a.getAddress().getAddress()} + ' ' + ${a.getAddress().getCity()} + ', ' + ${a.getAddress().getCap()} + ' - ' + ${a.getAddress().getCountry()} "></p>
                                 </div>
+                                <div class="row">
+                                    <h6 th:if="${a.isClosed()}==false">You winned the auctions but its not closed by the owner </h6>
+                                </div>
                             </div>
                         </td>
                     </tr>

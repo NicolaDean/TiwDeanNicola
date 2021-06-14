@@ -3,7 +3,6 @@ package it.polimi.tiw.controllers;
 import it.polimi.tiw.controllers.template.BasicServerlet;
 import it.polimi.tiw.dao.AuctionDao;
 import it.polimi.tiw.exceptions.CustomExeption;
-import it.polimi.tiw.managment.TemplatePaths;
 import it.polimi.tiw.models.User;
 import org.apache.commons.lang.StringEscapeUtils;
 
@@ -19,7 +18,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -105,7 +103,7 @@ public class CreateAuction  extends BasicServerlet {
             if(filePart == null)
                 throw new CustomExeption("You have to insert at least one image to show the objecte you want to sell");
 
-            if(!imgFormat.equals(".png") && !imgFormat.equals(".jpg") && !imgFormat.equals(".jpeg"))
+            if(!imgFormat.equals(".png") && !imgFormat.equals(".jpg") && !imgFormat.equals(".jpeg") && !imgFormat.equals(".webp"))
                 throw new CustomExeption("Image file format dosnt supported, only png,jpg,jpeg");
 
         } catch (CustomExeption customExeption) {

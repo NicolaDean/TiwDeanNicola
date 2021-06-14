@@ -2,7 +2,6 @@ package it.polimi.tiw.controllers;
 
 import it.polimi.tiw.controllers.template.BasicServerlet;
 import it.polimi.tiw.dao.UserDao;
-import it.polimi.tiw.managment.TemplatePaths;
 import it.polimi.tiw.models.User;
 import org.apache.commons.lang.StringEscapeUtils;
 

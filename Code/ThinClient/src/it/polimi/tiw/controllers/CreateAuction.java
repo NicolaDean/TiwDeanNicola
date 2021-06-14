@@ -107,7 +107,7 @@ public class CreateAuction  extends BasicServerletThymeleafSQL {
             if(filePart == null)
                 throw new CustomExeption("You have to insert at least one image to show the objecte you want to sell");
 
-            if(!imgFormat.equals(".png") && !imgFormat.equals(".jpg") && !imgFormat.equals(".jpeg"))
+            if(!imgFormat.equals(".png") && !imgFormat.equals(".jpg") && !imgFormat.equals(".jpeg")&& !imgFormat.equals(".webp"))
                 throw new CustomExeption("Image file format dosnt supported, only png,jpg,jpeg");
 
         } catch (CustomExeption customExeption) {

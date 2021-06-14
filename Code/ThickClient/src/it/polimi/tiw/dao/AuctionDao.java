@@ -113,14 +113,8 @@ public class AuctionDao {
         {
             throw new SQLException();
         }
-
-        for(Auction a:auctions){
-            System.out.println("NOME:--> " + a.getSalesItem().getName());
-
-            System.out.println(a.getExpiringDate() + " -> " +a.calculateExpiringTime());
-        }
-
         return auctions;
+
     }
 
     public void setAuctionClosed(int id) throws SQLException {

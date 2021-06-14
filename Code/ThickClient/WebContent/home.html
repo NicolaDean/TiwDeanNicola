@@ -177,19 +177,19 @@
 <div  class="col d-flex justify-content-center">
     <div  style="width:700px" >
         <form id = "auction-creation-form" action="#">
-            <input name="file"  type="file" accept=".png,.jpg,.jpeg,.webp">
+            <input name="file"  id="file-field" type="file" accept=".png,.jpg,.jpeg,.webp">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Auction's item</span>
                 </div>
-                <input name="name" type="text" class="form-control" placeholder="Name">
+                <input name="name" id="name-field" type="text" class="form-control" placeholder="Name" required>
                 <div class="custom-file">
                     <input name="filee"  type="file" accept=".png,.jpg,.jpeg,.webp" class="custom-file-input" id="customFile">
-                    <label class="custom-file-label" for="customFile">Choose an image</label>
+                    <label class="custom-file-label" for="customFile" required>Choose an image</label>
                 </div>
             </div>
             <div class="input-group mb-3">
-                <textarea  name="description" type="text" class="form-control" placeholder="Insert a small description..."/></textarea>
+                <textarea  name="description" id="desc-field" type="text" class="form-control" placeholder="Insert a small description..." required/></textarea>
             </div>
 
 
@@ -197,16 +197,15 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Offert details [ $ ]</span>
                 </div>
-                <input name="minimumOffer" type="number"class="form-control"  id="inputNumber" placeholder="Minimum offer">
-                <input name="initialOffer" type="number" class="form-control" id="inputNumber" placeholder="Start offer" >
+                <input name="minimumOffer" type="number"class="form-control"  id="min-field" placeholder="Minimum offer"required>
+                <input name="initialOffer" type="number" class="form-control" id="start-field" placeholder="Start offer" required>
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Expiring Date</span>
                 </div>
-                <input name="expiringDate" type="datetime-local" id="expiringDate"
-                       value="2021-04-12T19:30"
-                       min="2021-04-12T00:00" max="2050-06-14T00:00">
+                <input name="expiringDate" type="datetime-local" id="expiringDate-form"
+                       max="2050-06-14T00:00" required>
             </div>
             <div  id="auction-creation-button" class="btn btn-primary">CREATE AUCTION</div>
         </form>

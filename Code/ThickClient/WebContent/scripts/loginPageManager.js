@@ -14,8 +14,27 @@
             validateLogin(form)
         });
 
-        function validateLogin(form){
-            var self = this;
+        validateLogin = function(form){
+
+
+            var flag = false;
+            var error = " One of those Field Missing: ";
+
+            if(form["password-field"].value === "")
+            {
+                flag = true;
+                error +="password, "
+            }
+            if(form["email-field"].value ==="")
+            {
+                flag = true;
+                error +="email, "
+            }
+            setText(errorMsg,error);
+            if(flag) return;
+
+            setInvisible(errorMsg);
+
             makeCall("POST","Login",form,
                 function(req) {
                     if (req.readyState === XMLHttpRequest.DONE) {
@@ -27,13 +46,13 @@
                                 window.location.href = "home.html";
                                 break;
                             case 400: // bad request
-                                setText(self.errorMsg,message + "error 400");
+                                setText(errorMsg,message + "error 400");
                                 break;
                             case 401: // unauthorized
-                                setText(self.errorMsg,message + " Unautorized action");
+                                setText(errorMsg,message + " Unautorized action");
                                 break;
                             case 500: // server error
-                                setText(self.errorMsg,message + " Server error");
+                                setText(errorMsg,message + " Server error");
                                 break;
                         }
                     }

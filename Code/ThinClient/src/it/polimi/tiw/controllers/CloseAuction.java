@@ -42,11 +42,18 @@ public class CloseAuction extends BasicServerletThymeleafSQL {
             HttpSession session = request.getSession();
             User u = (User)session.getAttribute("currentUser");
 
-            if(u.getId() == auction.getUserId()) throw new CustomExeption("You cant close others auction");
+            if(u.getId() != auction.getUserId())
+            {
+                throw new CustomExeption("You cant close others auction");
+            }
             if(!auction.isClosable()) throw new CustomExeption("Non closable auction");
 
+            System.out.println(u.getId() +"->" + auction.getUserId());
+            System.out.println("lol");
 
             auctionDao.setAuctionClosed(id);
+
+            auction.setClosed();
             System.out.println("Auction + " + id + " closed");
             this.templateRenderer(request,response, TemplatePaths.auctionDetails);
             return;

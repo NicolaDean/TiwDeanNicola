@@ -78,14 +78,15 @@ public class OfferDao {
 
         Auction tmp = auctionDao.getAuctionById(auctionid);
 
-        if(tmp.isClosable())
+        if(tmp.isClosable() || tmp.isClosed())
             throw new CustomExeption("You cant do offert to closed auctions, this expired "+tmp.getExpiringDate());
         //Controll valid offer
         if(maxOffer != null &&  maxOffer.getOffer()  > offer)
             throw  new CustomExeption("Offer lower then maxOffer : " + maxOffer.getOffer() + " $");
         else if(maxOffer != null &&  maxOffer.getOffer()+ tmp.getMinimumOffer()  > offer)
             throw  new CustomExeption("You need to offer at least" + tmp.getMinimumOffer() + "$ more than "+ maxOffer.getOffer() + " $");
-
+        else if(tmp.getInitialPrice() > offer)
+            throw  new CustomExeption("Offer lower then initial price : " + tmp.getInitialPrice() + " $");
 
         PreparedStatement statement = this.connection.prepareStatement(query);
         statement.setInt(1,userId);

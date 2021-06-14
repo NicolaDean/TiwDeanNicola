@@ -4,7 +4,6 @@ import it.polimi.tiw.controllers.template.BasicServerlet;
 import it.polimi.tiw.dao.AuctionDao;
 import it.polimi.tiw.dao.OfferDao;
 import it.polimi.tiw.exceptions.CustomExeption;
-import it.polimi.tiw.managment.TemplatePaths;
 import it.polimi.tiw.models.Auction;
 import it.polimi.tiw.models.Offer;
 import it.polimi.tiw.models.User;

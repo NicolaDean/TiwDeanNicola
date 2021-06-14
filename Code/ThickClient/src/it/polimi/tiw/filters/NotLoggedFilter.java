@@ -1,7 +1,5 @@
 package it.polimi.tiw.filters;
 
-import it.polimi.tiw.managment.TemplatePaths;
-
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

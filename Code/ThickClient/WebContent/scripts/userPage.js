@@ -77,6 +77,7 @@ function UserPage(auctionDetails)
             var r4  = getDiv("auction-row4");
             r4.className = "row";
             r4.appendChild(getParagraph("","Shipping: " +auction.address.address + ", " + auction.address.cap + " - " + auction.address.city + " - "+ auction.address.country));
+            if(auction.closed === false) r4.appendChild(getTitle(6,"","You winned But Not shipped Yet"));
             col.appendChild(r4);
         }
 
